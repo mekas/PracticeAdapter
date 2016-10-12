@@ -52,6 +52,7 @@ public class FormAddStudentActivity extends AppCompatActivity {
                 Student student = new Student(id,noreg,name,phone,mail);
                 StudentList studentList = StudentList.getInstance();
                 studentList.addStudent(student);
+                finish();
             }
         });
     }

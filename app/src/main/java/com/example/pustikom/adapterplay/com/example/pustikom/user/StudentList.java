@@ -49,4 +49,8 @@ public class StudentList {
     public ArrayList<Student> getList(){
         return studentList;
     }
+
+    public int count(){
+        return studentList.size();
+    }
 }
