@@ -16,10 +16,9 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         app:fabSize="mini"
-
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/addFloatingActionButton"
         app:srcCompat="@drawable/ic_add_black_24dp"
         app:rippleColor="?attr/actionModeSplitBackground" />
 

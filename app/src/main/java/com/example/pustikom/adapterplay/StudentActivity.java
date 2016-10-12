@@ -1,7 +1,10 @@
 package com.example.pustikom.adapterplay;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
 
 import com.example.pustikom.adapterplay.com.example.pustikom.adapter.StudentArrayAdapter;
@@ -23,6 +26,17 @@ public class StudentActivity extends AppCompatActivity {
         StudentArrayAdapter studentArrayAdapter = new StudentArrayAdapter(this,students);
         ListView list_item = (ListView) findViewById(R.id.list_item);
         list_item.setAdapter(studentArrayAdapter);
+
+        //setlistener for floacting action bar
+        FloatingActionButton addStudentButton = (FloatingActionButton)findViewById(R.id.addFloatingActionButton);
+        addStudentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //open Form Add Student
+                Intent intent = new Intent(StudentActivity.this, FormAddStudentActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

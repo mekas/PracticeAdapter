@@ -2,4 +2,6 @@
     <string name="app_name">AdapterPlay</string>
     <string name="student_list">List of Students</string>
     <string name="teacher_list">List of Lecturers</string>
+    <string name="add_student_form">Add new Student</string>
+    <string name="edit_student_form">Edit Student</string>
 </resources>
