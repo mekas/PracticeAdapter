@@ -18,13 +18,17 @@ import java.util.ArrayList;
  */
 
 public class StudentActivity extends AppCompatActivity {
+
+    private StudentArrayAdapter studentArrayAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_view);
 
-        StudentList students = populateStudentDummies();
-        StudentArrayAdapter studentArrayAdapter = new StudentArrayAdapter(this,students.getList());
+        //TODO: prepare emptyView in case array is empty
+        //init empty array list
+        this.studentArrayAdapter = new StudentArrayAdapter(this,new ArrayList<Student>());
         ListView list_item = (ListView) findViewById(R.id.list_item);
         list_item.setAdapter(studentArrayAdapter);
 
@@ -38,7 +42,11 @@ public class StudentActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
+    @Override
+    public void onResume(){
+        super.onResume();
     }
 
     private StudentList populateStudentDummies(){
@@ -50,9 +58,4 @@ public class StudentActivity extends AppCompatActivity {
         return studentList;
     }
 
-    /*
-    private StudentList populateStudentDummies(){
-        StudentList studentList = StudentList.getInstance();
-        return null;
-    }*/
 }
