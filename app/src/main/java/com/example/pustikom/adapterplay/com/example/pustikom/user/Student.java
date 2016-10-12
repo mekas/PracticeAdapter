@@ -1,10 +1,12 @@
 package com.example.pustikom.adapterplay.com.example.pustikom.user;
 
+import java.io.Serializable;
+
 /**
  * Created by pustikom on 07/10/16.
  */
 
-public class Student {
+public class Student implements Serializable {
     private int id;
     private String noreg;
     private String name;

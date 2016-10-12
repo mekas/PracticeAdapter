@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,6 +25,7 @@ public class StudentActivity extends AppCompatActivity {
 
     private StudentArrayAdapter studentArrayAdapter;
     private StudentList studentList;
+    private ListView studentListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,20 @@ public class StudentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //open Form Add Student
                 Intent intent = new Intent(StudentActivity.this, FormAddStudentActivity.class);
+                intent.putExtra("action","add");
+                startActivity(intent);
+            }
+        });
+
+        studentListView = (ListView) findViewById(R.id.list_item);
+        studentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent = new Intent(StudentActivity.this, FormAddStudentActivity.class);
+                //we want to pass two data: action mode, and student info
+                intent.putExtra("action","edit");
+                Student student = studentList.get(position);
+                intent.putExtra("student_info",student);
                 startActivity(intent);
             }
         });
@@ -44,11 +62,9 @@ public class StudentActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        //TODO: prepare emptyView in case array is empty
-        ListView list_item = (ListView) findViewById(R.id.list_item);
+        //prepare emptyView
         TextView mEmptyTextView =(TextView) findViewById(R.id.empty_view);
-        list_item.setEmptyView(mEmptyTextView);
-
+        studentListView.setEmptyView(mEmptyTextView);
         //check size of student list
         if(studentList.count()==0) {
             studentArrayAdapter = new StudentArrayAdapter(this, new ArrayList<Student>());
@@ -57,15 +73,32 @@ public class StudentActivity extends AppCompatActivity {
         } else{
             studentArrayAdapter = new StudentArrayAdapter(this, studentList.getList());
         }
-        list_item.setAdapter(studentArrayAdapter);
+        studentListView.setAdapter(studentArrayAdapter);
     }
 
-    private StudentList populateStudentDummies(){
+    private void populateStudentDummies(){
         ArrayList<Student> studentArrayList = new ArrayList<Student>();
         studentArrayList.add(new Student("3145136188","TRI FEBRIANA SIAMI","0858xxxxxx","tri@mhs.unj.ac.id"));
         studentArrayList.add(new Student("3145136192","Ummu Kultsum","0813xxxxxx","ummu@mhs.unj.ac.id"));
         studentList.AddStudents(studentArrayList);
-        return studentList;
+        studentArrayAdapter = new StudentArrayAdapter(this,studentArrayList);
+        studentListView.setAdapter(studentArrayAdapter);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_student_list,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.create_dummy:
+                populateStudentDummies();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -13,9 +13,7 @@ public class StudentList {
 
     //define singleton class
     private StudentList(){
-        //studentList = new ArrayList<>();
-        //instance = new StudentList();
-        //id=1;
+
     }
 
     public static StudentList getInstance(){
@@ -34,6 +32,11 @@ public class StudentList {
 
     public Student removeLast(){
         Student student = studentList.remove(studentList.size()-1);
+        return student;
+    }
+
+    public Student get(int index){
+        Student student = studentList.get(index);
         return student;
     }
 

@@ -18,31 +18,31 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/EditStyle"
+                style="@style/TextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="No. " />
 
             <TextView
-                style="@style/EditStyle"
+                style="@style/TextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="NIM" />
 
             <TextView
-                style="@style/EditStyle"
+                style="@style/TextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nama" />
 
             <TextView
-                style="@style/EditStyle"
+                style="@style/TextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Email" />
 
             <TextView
-                style="@style/EditStyle"
+                style="@style/TextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Phone" />
