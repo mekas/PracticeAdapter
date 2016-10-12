@@ -12,7 +12,7 @@ public class Student {
     private String mail;
 
     public Student(String noreg, String name, String phone, String mail){
-        int id = StudentList.getInstance().nextId();
+        this.id = StudentList.getInstance().nextId();
         this.noreg = noreg;
         this.name = name;
         this.phone = phone;

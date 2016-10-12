@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.example.pustikom.adapterplay.com.example.pustikom.adapter.StudentArrayAdapter;
 import com.example.pustikom.adapterplay.com.example.pustikom.user.Student;
+import com.example.pustikom.adapterplay.com.example.pustikom.user.StudentList;
 
 import java.util.ArrayList;
 
@@ -22,8 +23,8 @@ public class StudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_view);
 
-        ArrayList<Student> students = populateStudentDummies();
-        StudentArrayAdapter studentArrayAdapter = new StudentArrayAdapter(this,students);
+        StudentList students = populateStudentDummies();
+        StudentArrayAdapter studentArrayAdapter = new StudentArrayAdapter(this,students.getList());
         ListView list_item = (ListView) findViewById(R.id.list_item);
         list_item.setAdapter(studentArrayAdapter);
 
@@ -40,10 +41,18 @@ public class StudentActivity extends AppCompatActivity {
 
     }
 
-    private ArrayList<Student> populateStudentDummies(){
-        ArrayList<Student> studentList = new ArrayList<Student>();
-        studentList.add(new Student(1,"3145136188","TRI FEBRIANA SIAMI","0858xxxxxx","tri@mhs.unj.ac.id"));
-        studentList.add(new Student(2,"3145136192","Ummu Kultsum","0813xxxxxx","ummu@mhs.unj.ac.id"));
+    private StudentList populateStudentDummies(){
+        ArrayList<Student> studentArrayList = new ArrayList<Student>();
+        studentArrayList.add(new Student("3145136188","TRI FEBRIANA SIAMI","0858xxxxxx","tri@mhs.unj.ac.id"));
+        studentArrayList.add(new Student("3145136192","Ummu Kultsum","0813xxxxxx","ummu@mhs.unj.ac.id"));
+        StudentList studentList = StudentList.getInstance();
+        studentList.AddStudents(studentArrayList);
         return studentList;
     }
+
+    /*
+    private StudentList populateStudentDummies(){
+        StudentList studentList = StudentList.getInstance();
+        return null;
+    }*/
 }
