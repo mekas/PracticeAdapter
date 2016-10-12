@@ -11,6 +11,14 @@ public class Student {
     private String phone;
     private String mail;
 
+    public Student(String noreg, String name, String phone, String mail){
+        int id = StudentList.getInstance().nextId();
+        this.noreg = noreg;
+        this.name = name;
+        this.phone = phone;
+        this.mail = mail;
+    }
+
     public Student(int id, String noreg, String name, String phone, String mail){
         this.id=id;
         this.noreg=noreg;
