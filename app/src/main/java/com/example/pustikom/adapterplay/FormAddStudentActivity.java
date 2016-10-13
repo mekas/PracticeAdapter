@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.pustikom.adapterplay.com.example.pustikom.user.Student;
 import com.example.pustikom.adapterplay.com.example.pustikom.user.StudentList;
@@ -21,6 +22,7 @@ import java.io.Serializable;
 public class FormAddStudentActivity extends AppCompatActivity {
 
     private EditText idText, nameText, noregText, mailText, phoneText;
+    private Student student;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class FormAddStudentActivity extends AppCompatActivity {
             setTitle("Add New Student");
         } else{
             setTitle("Edit Student");
+            student = (Student) intent.getSerializableExtra("student_info");
         }
 
         FloatingActionButton cancelButton = (FloatingActionButton) findViewById(R.id.cancelActionButton);
@@ -57,6 +60,9 @@ public class FormAddStudentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                /*
+                 * Store back to mainList
+                 */
                 int id = Integer.parseInt(idText.getText().toString());
                 String name = nameText.getText().toString();
                 String noreg = noregText.getText().toString();
@@ -67,17 +73,10 @@ public class FormAddStudentActivity extends AppCompatActivity {
                 StudentList studentList = StudentList.getInstance();
                 studentList.addStudent(student);
 
-                //TODO: add Toast
+                Toast.makeText(getApplicationContext(), "Data successfully added", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
-    }
-
-    /**
-     * TODO: preload student data from intent
-     */
-    private void loadStudentData(Serializable student){
-
     }
 
     @Override
@@ -103,6 +102,7 @@ public class FormAddStudentActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.delete_item:
                 //TODO: delete this item
+
                 return true;
         }
         return super.onOptionsItemSelected(item);

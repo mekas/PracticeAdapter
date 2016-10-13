@@ -81,7 +81,7 @@ public class StudentActivity extends AppCompatActivity {
         studentArrayList.add(new Student("3145136188","TRI FEBRIANA SIAMI","0858xxxxxx","tri@mhs.unj.ac.id"));
         studentArrayList.add(new Student("3145136192","Ummu Kultsum","0813xxxxxx","ummu@mhs.unj.ac.id"));
         studentList.AddStudents(studentArrayList);
-        studentArrayAdapter = new StudentArrayAdapter(this,studentArrayList);
+        studentArrayAdapter = new StudentArrayAdapter(this,studentList.getList());
         studentListView.setAdapter(studentArrayAdapter);
     }
 

@@ -9,9 +9,8 @@ import java.util.ArrayList;
 public class StudentList {
     private static ArrayList<Student> studentList = new ArrayList<>();
     private static StudentList instance = new StudentList();
-    private static int id=0;
 
-    //define singleton class
+    //set singleton class
     private StudentList(){
 
     }
@@ -26,8 +25,7 @@ public class StudentList {
     }
 
     public int nextId(){
-        id++;
-        return id;
+        return studentList.size()+1;
     }
 
     public Student removeLast(){
@@ -40,6 +38,12 @@ public class StudentList {
         return student;
     }
 
+    public Student remove(int index){
+        Student student = studentList.remove(index);
+        resetCounterId(index);
+        return student;
+    }
+
     public Student getLast(){
         Student student = studentList.get(studentList.size()-1);
         return student;
@@ -47,6 +51,7 @@ public class StudentList {
 
     public void AddStudents(ArrayList<Student> students){
         studentList.addAll(students);
+        resetCounterId(0);
     }
 
     public ArrayList<Student> getList(){
@@ -55,5 +60,11 @@ public class StudentList {
 
     public int count(){
         return studentList.size();
+    }
+
+    private void resetCounterId(int i){
+        for (int j = i; j < studentList.size(); j++) {
+            studentList.get(j).setId(j);
+        }
     }
 }

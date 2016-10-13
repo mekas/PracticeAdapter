@@ -14,7 +14,7 @@ public class Student implements Serializable {
     private String mail;
 
     public Student(String noreg, String name, String phone, String mail){
-        this.id = StudentList.getInstance().nextId();
+        this.id = 0;
         this.noreg = noreg;
         this.name = name;
         this.phone = phone;
