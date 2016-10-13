@@ -5,4 +5,7 @@
     <item android:title="Create Dummy"
         app:showAsAction="never"
         android:id="@+id/create_dummy" />
+    <item android:title="Clear List"
+        app:showAsAction="never"
+        android:id="@+id/clear_list" />
 </menu>

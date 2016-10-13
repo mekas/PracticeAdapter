@@ -97,6 +97,11 @@ public class StudentActivity extends AppCompatActivity {
             case R.id.create_dummy:
                 populateStudentDummies();
                 return true;
+            case R.id.clear_list:
+                StudentList.getInstance().clearList();
+                studentArrayAdapter = new StudentArrayAdapter(this, new ArrayList<Student>());
+                studentListView.setAdapter(studentArrayAdapter);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

@@ -71,4 +71,8 @@ public class StudentList {
             studentList.get(j).setId(j);
         }
     }
+
+    public void clearList(){
+        studentList.clear();
+    }
 }
