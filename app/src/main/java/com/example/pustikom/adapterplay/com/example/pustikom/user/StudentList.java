@@ -38,6 +38,10 @@ public class StudentList {
         return student;
     }
 
+    public void set(int index, Student student){
+        studentList.set(index, student);
+    }
+
     public Student remove(int index){
         Student student = studentList.remove(index);
         resetCounterId(index);

@@ -11,6 +11,7 @@
         android:id="@+id/student_id"
         android:gravity="center_vertical"
         android:padding="8dp"
+        android:textColor="#2B3D4D"
         />
 
     <TextView
@@ -20,6 +21,7 @@
         android:id="@+id/student_noreg"
         android:padding="8dp"
         android:gravity="center_vertical"
+        android:textColor="#2B3D4D"
         />
 
     <TextView
@@ -28,7 +30,9 @@
         android:text="Name"
         android:gravity="center_vertical"
         android:padding="8dp"
-        android:id="@+id/student_name"/>
+        android:id="@+id/student_name"
+        android:textColor="#2B3D4D"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
