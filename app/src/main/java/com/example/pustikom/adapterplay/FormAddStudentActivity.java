@@ -23,7 +23,7 @@ import com.example.pustikom.adapterplay.user.StudentList;
 
 public class FormAddStudentActivity extends AppCompatActivity {
 
-    private EditText idText, nameText, noregText, mailText, phoneText;
+    private EditText nameText, noregText, mailText, phoneText;
     private Student student;
     private Spinner genderSpinner;
     private int mGender;
@@ -35,12 +35,14 @@ public class FormAddStudentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_student);
 
         //register all View
-        idText = (EditText) findViewById(R.id.edit_id);
         nameText = (EditText) findViewById(R.id.edit_nama);
         noregText = (EditText) findViewById(R.id.edit_nim);
         phoneText = (EditText) findViewById(R.id.edit_phone);
         mailText = (EditText) findViewById(R.id.edit_email);
         genderSpinner = (Spinner) findViewById(R.id.spinner_gender);
+
+        //setup spinner
+        setupSpinner();
 
         //get Intent
         Intent intent = getIntent();
@@ -53,12 +55,13 @@ public class FormAddStudentActivity extends AppCompatActivity {
             act=1;
             setTitle("Edit Student");
             student = (Student) intent.getSerializableExtra("student_info");
-            idText.setText("" + student.getId());
             nameText.setText(student.getName());
             noregText.setText(student.getNoreg());
             phoneText.setText(student.getPhone());
             mailText.setText(student.getMail());
+            genderSpinner.setSelection(student.getGender());
         }
+
 
         FloatingActionButton cancelButton = (FloatingActionButton) findViewById(R.id.cancelActionButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +79,6 @@ public class FormAddStudentActivity extends AppCompatActivity {
                 saveData();
             }
         });
-        setupSpinner();
     }
 
     private void setupSpinner(){
@@ -105,22 +107,25 @@ public class FormAddStudentActivity extends AppCompatActivity {
     }
 
     private void saveData() {
-        int id = Integer.parseInt(idText.getText().toString());
         String name = nameText.getText().toString();
         String noreg = noregText.getText().toString();
         String mail = mailText.getText().toString();
         String phone = phoneText.getText().toString();
-        student = new Student(id, noreg, name, phone, mail);
         StudentList studentList = StudentList.getInstance();
         switch (act) {
             case 0: //mode save
+                student = new Student(0, noreg, name, phone, mail, mGender);
                 studentList.addStudent(student);
                 Toast.makeText(getApplicationContext(), "Student successfully added", Toast.LENGTH_SHORT).show();
                 finish();
+                break;
             case 1: //mode edit
+                int id=student.getId();
+                student = new Student(id, noreg,name, phone, mail,mGender);
                 studentList.set(id,student);
                 Toast.makeText(getApplicationContext(),"Student successfully edited", Toast.LENGTH_SHORT).show();
                 finish();
+                break;
         }
     }
 

@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.pustikom.adapterplay.adapter.StudentArrayAdapter;
+import com.example.pustikom.adapterplay.db.StudentEntry;
 import com.example.pustikom.adapterplay.user.Student;
 import com.example.pustikom.adapterplay.user.StudentList;
 
@@ -65,6 +66,8 @@ public class StudentActivity extends AppCompatActivity {
         //prepare emptyView
         TextView mEmptyTextView =(TextView) findViewById(R.id.empty_view);
         studentListView.setEmptyView(mEmptyTextView);
+        //get studentList from latest cache
+        studentList=StudentList.getInstance();
         //check size of student list
         if(studentList.count()==0) {
             studentArrayAdapter = new StudentArrayAdapter(this, new ArrayList<Student>());
@@ -78,8 +81,8 @@ public class StudentActivity extends AppCompatActivity {
 
     private void populateStudentDummies(){
         ArrayList<Student> studentArrayList = new ArrayList<Student>();
-        studentArrayList.add(new Student("3145136188","TRI FEBRIANA SIAMI","0858xxxxxx","tri@mhs.unj.ac.id"));
-        studentArrayList.add(new Student("3145136192","Ummu Kultsum","0813xxxxxx","ummu@mhs.unj.ac.id"));
+        studentArrayList.add(new Student("3145136188","TRI FEBRIANA SIAMI","0858xxxxxx","tri@mhs.unj.ac.id", StudentEntry.CODE_FEMALE));
+        studentArrayList.add(new Student("3145136192","Ummu Kultsum","0813xxxxxx","ummu@mhs.unj.ac.id", StudentEntry.CODE_FEMALE));
         studentList.AddStudents(studentArrayList);
         studentArrayAdapter = new StudentArrayAdapter(this,studentList.getList());
         studentListView.setAdapter(studentArrayAdapter);

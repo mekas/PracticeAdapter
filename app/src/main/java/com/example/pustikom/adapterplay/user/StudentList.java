@@ -25,7 +25,7 @@ public class StudentList {
     }
 
     public int nextId(){
-        return studentList.size()+1;
+        return studentList.size();
     }
 
     public Student removeLast(){

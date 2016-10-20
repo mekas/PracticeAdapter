@@ -21,12 +21,6 @@
                 style="@style/TextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="No. " />
-
-            <TextView
-                style="@style/TextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="NIM" />
 
             <TextView
@@ -61,10 +55,6 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/edit_id"
-                style="@style/EditStyle" />
-
-            <EditText
                 android:id="@+id/edit_nim"
                 style="@style/EditStyle" />
 
@@ -74,14 +64,14 @@
 
             <Spinner
                 android:id="@+id/spinner_gender"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="24dp"
                 android:spinnerMode="dropdown"
                 />
 
             <EditText
                 android:id="@+id/edit_email"
+                android:layout_marginTop="0dp"
                 style="@style/EditStyle" />
 
             <EditText

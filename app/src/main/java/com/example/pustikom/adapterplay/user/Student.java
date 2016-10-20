@@ -22,6 +22,15 @@ public class Student implements Serializable {
         this.mail = mail;
     }
 
+    public Student(String noreg, String name, String phone, String mail, int gender){
+        this.id = 0;
+        this.noreg = noreg;
+        this.name = name;
+        this.phone = phone;
+        this.mail = mail;
+        this.gender = gender;
+    }
+
     public Student(int id, String noreg, String name, String phone, String mail){
         this.id=id;
         this.noreg=noreg;
@@ -36,7 +45,7 @@ public class Student implements Serializable {
         this.name=name;
         this.phone=phone;
         this.mail=mail;
-        this.setGender(gender);
+        this.gender = gender;
     }
 
     public String getNoreg() {
