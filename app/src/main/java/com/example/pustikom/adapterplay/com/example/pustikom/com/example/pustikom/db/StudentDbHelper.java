@@ -18,13 +18,31 @@ public class StudentDbHelper extends SQLiteOpenHelper {
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
     }
 
+    /**
+     * Called when database is created for the first time
+     * @param db
+     */
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+    public void onCreate(SQLiteDatabase db) {
+        String sql="create table " + StudentEntry.TABLE_NAME + "(" +
+                StudentEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                StudentEntry.COLUMN_NIM+ " TEXT NOT NULL, " +
+                StudentEntry.COLUMN_NAME + " TEXT NOT NULL," +
+                StudentEntry.COLUMN_GENDER + " INTEGER," +
+                StudentEntry.COLUMN_MAIL + " TEXT," +
+                StudentEntry.COLUMN_PHONE + " TEXT" +
+                ");";
+        db.execSQL(sql);
     }
 
+    /**
+     * Called when the database need to be upgraded
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
 }
