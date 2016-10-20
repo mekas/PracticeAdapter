@@ -2,6 +2,9 @@ package com.example.pustikom.adapterplay.db;
 
 import android.provider.BaseColumns;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by pustikom on 20/10/16.
  */
@@ -14,7 +17,10 @@ public final class StudentEntry implements BaseColumns{
     public static final String COLUMN_MAIL="mail";
     public static final String COLUMN_PHONE="phone";
     public static final String COLUMN_GENDER="gender";
-    public static final int GENDER_MALE=0;
-    public static final int GENDER_FEMALE=1;
-
+    public static final int CODE_MALE =0;
+    public static final int CODE_FEMALE =1;
+    public static final String STRING_MALE ="laki-laki";
+    public static final String STRING_FEMALE = "Perempuan";
+    private static final String[] gender_option ={STRING_MALE, STRING_FEMALE};
+    public static final ArrayList<String> GENDERS = new ArrayList<String>(Arrays.asList(gender_option));
 }

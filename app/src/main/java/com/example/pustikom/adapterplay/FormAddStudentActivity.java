@@ -7,9 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.pustikom.adapterplay.db.StudentEntry;
 import com.example.pustikom.adapterplay.user.Student;
 import com.example.pustikom.adapterplay.user.StudentList;
 
@@ -21,6 +25,8 @@ public class FormAddStudentActivity extends AppCompatActivity {
 
     private EditText idText, nameText, noregText, mailText, phoneText;
     private Student student;
+    private Spinner genderSpinner;
+    private int mGender;
     private int act;
 
     @Override
@@ -34,6 +40,7 @@ public class FormAddStudentActivity extends AppCompatActivity {
         noregText = (EditText) findViewById(R.id.edit_nim);
         phoneText = (EditText) findViewById(R.id.edit_phone);
         mailText = (EditText) findViewById(R.id.edit_email);
+        genderSpinner = (Spinner) findViewById(R.id.spinner_gender);
 
         //get Intent
         Intent intent = getIntent();
@@ -67,6 +74,32 @@ public class FormAddStudentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveData();
+            }
+        });
+        setupSpinner();
+    }
+
+    private void setupSpinner(){
+        ArrayAdapter genderSpinnerAdapter = new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item, StudentEntry.GENDERS);
+        genderSpinnerAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        genderSpinner.setAdapter(genderSpinnerAdapter);
+        genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                String gender = (String) adapterView.getItemAtPosition(position);
+                switch (gender){
+                    case StudentEntry.STRING_MALE:
+                        mGender = StudentEntry.CODE_MALE;
+                        break;
+                    case StudentEntry.STRING_FEMALE:
+                        mGender = StudentEntry.CODE_FEMALE;
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent){
+                mGender = StudentEntry.CODE_MALE;
             }
         });
     }

@@ -39,6 +39,12 @@
                 style="@style/TextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Gender"/>
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Email" />
 
             <TextView
@@ -65,6 +71,14 @@
             <EditText
                 android:id="@+id/edit_nama"
                 style="@style/EditStyle" />
+
+            <Spinner
+                android:id="@+id/spinner_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="24dp"
+                android:spinnerMode="dropdown"
+                />
 
             <EditText
                 android:id="@+id/edit_email"
