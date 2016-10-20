@@ -1,4 +1,4 @@
-package com.example.pustikom.adapterplay.com.example.pustikom.user;
+package com.example.pustikom.adapterplay.user;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.pustikom.adapterplay.com.example.pustikom.user;
+package com.example.pustikom.adapterplay.user;
 
 /**
  * Created by pustikom on 07/10/16.

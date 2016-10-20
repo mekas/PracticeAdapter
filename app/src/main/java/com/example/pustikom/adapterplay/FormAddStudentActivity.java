@@ -10,10 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.pustikom.adapterplay.com.example.pustikom.user.Student;
-import com.example.pustikom.adapterplay.com.example.pustikom.user.StudentList;
-
-import java.io.Serializable;
+import com.example.pustikom.adapterplay.user.Student;
+import com.example.pustikom.adapterplay.user.StudentList;
 
 /**
  * Created by pustikom on 12/10/16.

@@ -1,4 +1,4 @@
-package com.example.pustikom.adapterplay.com.example.pustikom.adapter;
+package com.example.pustikom.adapterplay.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,9 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.pustikom.adapterplay.R;
-import com.example.pustikom.adapterplay.com.example.pustikom.user.Student;
-
-import org.w3c.dom.Text;
+import com.example.pustikom.adapterplay.user.Student;
 
 import java.util.ArrayList;
 

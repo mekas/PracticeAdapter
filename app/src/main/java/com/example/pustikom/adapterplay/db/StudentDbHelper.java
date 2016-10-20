@@ -1,4 +1,4 @@
-package com.example.pustikom.adapterplay.com.example.pustikom.com.example.pustikom.db;
+package com.example.pustikom.adapterplay.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -11,9 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.pustikom.adapterplay.com.example.pustikom.adapter.StudentArrayAdapter;
-import com.example.pustikom.adapterplay.com.example.pustikom.user.Student;
-import com.example.pustikom.adapterplay.com.example.pustikom.user.StudentList;
+import com.example.pustikom.adapterplay.adapter.StudentArrayAdapter;
+import com.example.pustikom.adapterplay.user.Student;
+import com.example.pustikom.adapterplay.user.StudentList;
 
 import java.util.ArrayList;
 
