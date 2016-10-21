@@ -20,7 +20,7 @@ public class StudentList {
     }
 
     /**
-     * Add student but with id changed with internal row id computation
+     * Obselete, Add student but with id changed with internal row id computation
      * @param student
      */
     public void addStudentWithIdTamper(Student student){
@@ -32,7 +32,7 @@ public class StudentList {
      * Add student directly
      * @param student
      */
-    public void AddStudent(Student student){
+    public void addStudent(Student student){
         studentList.add(student);
     }
 

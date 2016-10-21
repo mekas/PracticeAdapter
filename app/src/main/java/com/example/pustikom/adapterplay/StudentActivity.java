@@ -1,14 +1,10 @@
 package com.example.pustikom.adapterplay;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
+
 import android.content.Intent;
-import android.database.CharArrayBuffer;
-import android.database.ContentObserver;
+
 import android.database.Cursor;
-import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -44,7 +40,6 @@ public class StudentActivity extends AppCompatActivity {
         setContentView(R.layout.list_view);
         studentList = StudentList.getInstance();
 
-        //TODO: immedietely load list from database
 
         //setlistener for floacting action bar
         FloatingActionButton addStudentButton = (FloatingActionButton)findViewById(R.id.addFloatingActionButton);
@@ -71,7 +66,11 @@ public class StudentActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //instantiate reference to database
         mdb = new StudentDbHelper(this);
+        //immedietely load list from database
+        loadStudentFromDB();
     }
 
     /**
@@ -92,6 +91,28 @@ public class StudentActivity extends AppCompatActivity {
                 null, //group statement
                 null, //don't filter by row groups
                 null); //order by statemnt
+
+        //figure out column index given id
+        int idIndex = cursor.getColumnIndex(StudentEntry._ID);
+        int nimIndex = cursor.getColumnIndex(StudentEntry.COLUMN_NIM);
+        int nameIndex = cursor.getColumnIndex(StudentEntry.COLUMN_NAME);
+        int genderIndex = cursor.getColumnIndex(StudentEntry.COLUMN_GENDER);
+        int phoneIndex = cursor.getColumnIndex(StudentEntry.COLUMN_PHONE);
+        int mailIndex = cursor.getColumnIndex(StudentEntry.COLUMN_MAIL);
+
+        while(cursor.moveToNext()){
+            long id = cursor.getLong(idIndex);
+            String nim = cursor.getString(nimIndex);
+            String name = cursor.getString(nameIndex);
+            int gender = cursor.getInt(genderIndex);
+            String mail = cursor.getString(mailIndex);
+            String phone = cursor.getString(phoneIndex);
+            //create student instance based on these data
+            Student student = new Student(id,nim,name,phone,mail,gender);
+            studentList.addStudent(student);
+        }
+
+        cursor.close();
     }
 
     @Override
@@ -114,7 +135,7 @@ public class StudentActivity extends AppCompatActivity {
     }
 
     /**
-     * Generate data, insert to SQLite, then store to list
+     * Generate data, store to list, then store to sqliteDb
      */
     private void populateStudentDummies(){
         ArrayList<Student> studentArrayList = new ArrayList<Student>();

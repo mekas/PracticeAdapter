@@ -18,16 +18,31 @@ public class Student implements Serializable {
     private String mail;
     private int gender;
 
+    /**
+     * id default to -1
+     * @param noreg Student registration number
+     * @param name Student name
+     * @param phone Student phone
+     * @param mail Student mail
+     */
     public Student(String noreg, String name, String phone, String mail){
-        this.id = 0;
+        this.id = -1;
         this.noreg = noreg;
         this.name = name;
         this.phone = phone;
         this.mail = mail;
     }
 
+    /**
+     * id default to -1
+     * @param noreg Student registration number
+     * @param name Student name
+     * @param phone Student phone
+     * @param mail Student mail
+     * @param gender Male(0) or Female(1)
+     */
     public Student(String noreg, String name, String phone, String mail, int gender){
-        this.id = 0;
+        this.id = -1;
         this.noreg = noreg;
         this.name = name;
         this.phone = phone;
@@ -35,6 +50,14 @@ public class Student implements Serializable {
         this.gender = gender;
     }
 
+    /**
+     *
+     * @param id Synchronized with database primary key
+     * @param noreg Student registration number
+     * @param name Student name
+     * @param phone Student phone
+     * @param mail Student mail
+     */
     public Student(long id, String noreg, String name, String phone, String mail){
         this.id=id;
         this.noreg=noreg;
@@ -43,6 +66,15 @@ public class Student implements Serializable {
         this.mail=mail;
     }
 
+    /**
+     *
+     * @param id Synchronized with database primary key
+     * @param noreg Student registration number
+     * @param name Student name
+     * @param phone Student phone
+     * @param mail Student mail
+     * @param gender male(0) or Female(1)
+     */
     public Student(long id, String noreg, String name, String phone, String mail, int gender){
         this.id=id;
         this.noreg=noreg;
