@@ -1,6 +1,8 @@
 package com.example.pustikom.adapterplay;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.pustikom.adapterplay.adapter.StudentArrayAdapter;
+import com.example.pustikom.adapterplay.db.StudentDbHelper;
 import com.example.pustikom.adapterplay.db.StudentEntry;
 import com.example.pustikom.adapterplay.user.Student;
 import com.example.pustikom.adapterplay.user.StudentList;
@@ -27,6 +30,7 @@ public class StudentActivity extends AppCompatActivity {
     private StudentArrayAdapter studentArrayAdapter;
     private StudentList studentList;
     private ListView studentListView;
+    private StudentDbHelper mdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,7 @@ public class StudentActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        mdb = new StudentDbHelper(this);
     }
 
     @Override
@@ -79,6 +84,9 @@ public class StudentActivity extends AppCompatActivity {
         studentListView.setAdapter(studentArrayAdapter);
     }
 
+    /**
+     * Generate data and insert to SQLite
+     */
     private void populateStudentDummies(){
         ArrayList<Student> studentArrayList = new ArrayList<Student>();
         studentArrayList.add(new Student("3145136188","TRI FEBRIANA SIAMI","0858xxxxxx","tri@mhs.unj.ac.id", StudentEntry.CODE_FEMALE));
@@ -86,6 +94,25 @@ public class StudentActivity extends AppCompatActivity {
         studentList.AddStudents(studentArrayList);
         studentArrayAdapter = new StudentArrayAdapter(this,studentList.getList());
         studentListView.setAdapter(studentArrayAdapter);
+        listToContentValues(studentArrayList);
+    }
+
+    /**
+     * Insert list data to database
+     * @param students
+     */
+    private void listToContentValues(ArrayList<Student> students){
+        SQLiteDatabase db = mdb.getWritableDatabase();
+        for (Student student: students
+             ) {
+            ContentValues values = new ContentValues();
+            values.put(StudentEntry.COLUMN_NIM, student.getNoreg());
+            values.put(StudentEntry.COLUMN_NAME, student.getName());
+            values.put(StudentEntry.COLUMN_GENDER, student.getGender());
+            values.put(StudentEntry.COLUMN_MAIL, student.getMail());
+            values.put(StudentEntry.COLUMN_PHONE, student.getPhone());
+            mdb.insert(db,values);
+        }
     }
 
     @Override

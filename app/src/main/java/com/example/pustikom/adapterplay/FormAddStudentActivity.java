@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.pustikom.adapterplay.db.StudentDbHelper;
 import com.example.pustikom.adapterplay.db.StudentEntry;
 import com.example.pustikom.adapterplay.user.Student;
 import com.example.pustikom.adapterplay.user.StudentList;
@@ -28,6 +29,7 @@ public class FormAddStudentActivity extends AppCompatActivity {
     private Spinner genderSpinner;
     private int mGender;
     private int act;
+    private StudentDbHelper mdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

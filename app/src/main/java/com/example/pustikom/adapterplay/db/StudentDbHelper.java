@@ -1,5 +1,6 @@
 package com.example.pustikom.adapterplay.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -44,5 +45,9 @@ public class StudentDbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public void insert(SQLiteDatabase wdb, ContentValues values){
+        long rowId = wdb.insert(StudentEntry.TABLE_NAME, null, values);
     }
 }
