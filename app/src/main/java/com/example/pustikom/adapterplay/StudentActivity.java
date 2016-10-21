@@ -105,13 +105,7 @@ public class StudentActivity extends AppCompatActivity {
         SQLiteDatabase db = mdb.getWritableDatabase();
         for (Student student: students
              ) {
-            ContentValues values = new ContentValues();
-            values.put(StudentEntry.COLUMN_NIM, student.getNoreg());
-            values.put(StudentEntry.COLUMN_NAME, student.getName());
-            values.put(StudentEntry.COLUMN_GENDER, student.getGender());
-            values.put(StudentEntry.COLUMN_MAIL, student.getMail());
-            values.put(StudentEntry.COLUMN_PHONE, student.getPhone());
-            mdb.insert(db,values);
+            mdb.insert(db,student);
         }
     }
 
