@@ -65,4 +65,9 @@ public class StudentDbHelper extends SQLiteOpenHelper {
         ContentValues values = Student.toContentValues(student);
         int affectedRows = wdb.update(StudentEntry.TABLE_NAME,values,condition,conditionArg);
     }
+
+    public void truncate(SQLiteDatabase db){
+        String sql = "DELETE FROM " + StudentEntry.TABLE_NAME + ";VACUUM;";
+        db.execSQL(sql);
+    }
 }

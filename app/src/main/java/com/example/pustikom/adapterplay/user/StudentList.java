@@ -67,7 +67,6 @@ public class StudentList {
 
     public void AddStudents(ArrayList<Student> students){
         studentList.addAll(students);
-        resetCounterId(0);
     }
 
     public ArrayList<Student> getList(){

@@ -100,6 +100,8 @@ public class StudentActivity extends AppCompatActivity {
         int phoneIndex = cursor.getColumnIndex(StudentEntry.COLUMN_PHONE);
         int mailIndex = cursor.getColumnIndex(StudentEntry.COLUMN_MAIL);
 
+        //always reset list before load fresh data from database
+        studentList.clearList();
         while(cursor.moveToNext()){
             long id = cursor.getLong(idIndex);
             String nim = cursor.getString(nimIndex);
@@ -109,6 +111,7 @@ public class StudentActivity extends AppCompatActivity {
             String phone = cursor.getString(phoneIndex);
             //create student instance based on these data
             Student student = new Student(id,nim,name,phone,mail,gender);
+
             studentList.addStudent(student);
         }
 
@@ -141,10 +144,12 @@ public class StudentActivity extends AppCompatActivity {
         ArrayList<Student> studentArrayList = new ArrayList<Student>();
         studentArrayList.add(new Student("3145136188","TRI FEBRIANA SIAMI","0858xxxxxx","tri@mhs.unj.ac.id", StudentEntry.CODE_FEMALE));
         studentArrayList.add(new Student("3145136192","Ummu Kultsum","0813xxxxxx","ummu@mhs.unj.ac.id", StudentEntry.CODE_FEMALE));
+
+        insertFromList(studentArrayList);
+        //post inserting to database then set the adapter, don't mistaken on the order
         studentList.AddStudents(studentArrayList);
         studentArrayAdapter = new StudentArrayAdapter(this,studentList.getList());
         studentListView.setAdapter(studentArrayAdapter);
-        insertFromList(studentArrayList);
     }
 
     /**
@@ -172,9 +177,14 @@ public class StudentActivity extends AppCompatActivity {
                 populateStudentDummies();
                 return true;
             case R.id.clear_list:
+                //clear list
                 StudentList.getInstance().clearList();
+                //reset adapter
                 studentArrayAdapter = new StudentArrayAdapter(this, new ArrayList<Student>());
                 studentListView.setAdapter(studentArrayAdapter);
+                //clear student table
+                SQLiteDatabase wdb = mdb.getWritableDatabase();
+                mdb.truncate(wdb);
                 return true;
         }
 
