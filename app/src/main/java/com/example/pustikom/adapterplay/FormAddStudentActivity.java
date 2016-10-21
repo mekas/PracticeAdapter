@@ -121,15 +121,15 @@ public class FormAddStudentActivity extends AppCompatActivity {
         switch (act) {
             case 0: //mode save
                 student = new Student(noreg, name, phone, mail, mGender);
-                studentList.addStudent(student);
+                studentList.addStudentWithIdTamper(student);
                 mdb.insert(db,student);
                 Toast.makeText(getApplicationContext(), "Student successfully added", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
             case 1: //mode edit
-                int id=student.getId();
+                long id=student.getId();
                 student = new Student(id, noreg,name, phone, mail,mGender);
-                studentList.set(id,student);
+                studentList.set((int) id,student);
                 //TODO: update database for this row
                 Toast.makeText(getApplicationContext(),"Student successfully edited", Toast.LENGTH_SHORT).show();
                 finish();
@@ -165,8 +165,8 @@ public class FormAddStudentActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.delete_item:
                 //get current id
-                int id = student.getId();
-                StudentList.getInstance().remove(id);
+                long id = student.getId();
+                StudentList.getInstance().remove((int) id);
                 finish();
                 return true;
         }

@@ -38,6 +38,8 @@ public class StudentActivity extends AppCompatActivity {
         setContentView(R.layout.list_view);
         studentList = StudentList.getInstance();
 
+        //TODO: immedietely load list from database
+
         //setlistener for floacting action bar
         FloatingActionButton addStudentButton = (FloatingActionButton)findViewById(R.id.addFloatingActionButton);
         addStudentButton.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +53,7 @@ public class StudentActivity extends AppCompatActivity {
         });
 
         studentListView = (ListView) findViewById(R.id.list_item);
+        //set up on item click handler
         studentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -85,7 +88,7 @@ public class StudentActivity extends AppCompatActivity {
     }
 
     /**
-     * Generate data and insert to SQLite
+     * Generate data, insert to SQLite, then store to list
      */
     private void populateStudentDummies(){
         ArrayList<Student> studentArrayList = new ArrayList<Student>();

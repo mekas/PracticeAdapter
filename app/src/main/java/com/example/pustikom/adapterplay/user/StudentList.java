@@ -19,12 +19,24 @@ public class StudentList {
         return instance;
     }
 
-    public void addStudent(Student student){
+    /**
+     * Add student but with id changed with internal row id computation
+     * @param student
+     */
+    public void addStudentWithIdTamper(Student student){
         student.setId(nextId());
         studentList.add(student);
     }
 
-    public int nextId(){
+    /**
+     * Add student directly
+     * @param student
+     */
+    public void AddStudent(Student student){
+        studentList.add(student);
+    }
+
+    public long nextId(){
         return studentList.size();
     }
 

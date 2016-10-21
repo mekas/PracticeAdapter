@@ -49,9 +49,16 @@ public class StudentDbHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Insert this student instance to table Student, then update id on student
+     * @param wdb
+     * @param student
+     */
     public void insert(SQLiteDatabase wdb, Student student){
         ContentValues values = Student.toContentValues(student);
         long rowId = wdb.insert(StudentEntry.TABLE_NAME, null, values);
+        //update row back to student
+        student.setId(rowId);
     }
 
     public void update(SQLiteDatabase wdb, Student student, String condition, String[] conditionArg){

@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 
 public class Student implements Serializable {
-    private int id;
+    private long id;
     private String noreg;
     private String name;
     private String phone;
@@ -35,7 +35,7 @@ public class Student implements Serializable {
         this.gender = gender;
     }
 
-    public Student(int id, String noreg, String name, String phone, String mail){
+    public Student(long id, String noreg, String name, String phone, String mail){
         this.id=id;
         this.noreg=noreg;
         this.name=name;
@@ -43,7 +43,7 @@ public class Student implements Serializable {
         this.mail=mail;
     }
 
-    public Student(int id, String noreg, String name, String phone, String mail, int gender){
+    public Student(long id, String noreg, String name, String phone, String mail, int gender){
         this.id=id;
         this.noreg=noreg;
         this.name=name;
@@ -84,11 +84,11 @@ public class Student implements Serializable {
         this.mail = mail;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
