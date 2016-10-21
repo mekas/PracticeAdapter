@@ -1,5 +1,9 @@
 package com.example.pustikom.adapterplay.user;
 
+import android.content.ContentValues;
+
+import com.example.pustikom.adapterplay.db.StudentEntry;
+
 import java.io.Serializable;
 
 /**
@@ -94,5 +98,15 @@ public class Student implements Serializable {
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public static ContentValues toContentValues(Student student){
+        ContentValues values = new ContentValues();
+        values.put(StudentEntry.COLUMN_NIM, student.getNoreg());
+        values.put(StudentEntry.COLUMN_NAME, student.getName());
+        values.put(StudentEntry.COLUMN_GENDER, student.getGender());
+        values.put(StudentEntry.COLUMN_MAIL, student.getMail());
+        values.put(StudentEntry.COLUMN_PHONE, student.getPhone());
+        return values;
     }
 }

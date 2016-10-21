@@ -94,14 +94,14 @@ public class StudentActivity extends AppCompatActivity {
         studentList.AddStudents(studentArrayList);
         studentArrayAdapter = new StudentArrayAdapter(this,studentList.getList());
         studentListView.setAdapter(studentArrayAdapter);
-        listToContentValues(studentArrayList);
+        insertFromList(studentArrayList);
     }
 
     /**
      * Insert list data to database
      * @param students
      */
-    private void listToContentValues(ArrayList<Student> students){
+    private void insertFromList(ArrayList<Student> students){
         SQLiteDatabase db = mdb.getWritableDatabase();
         for (Student student: students
              ) {

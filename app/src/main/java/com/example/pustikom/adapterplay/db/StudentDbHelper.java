@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.pustikom.adapterplay.user.Student;
+
 /**
  * Created by pustikom on 20/10/16.
  */
@@ -47,7 +49,13 @@ public class StudentDbHelper extends SQLiteOpenHelper {
 
     }
 
-    public void insert(SQLiteDatabase wdb, ContentValues values){
+    public void insert(SQLiteDatabase wdb, Student student){
+        ContentValues values = Student.toContentValues(student);
         long rowId = wdb.insert(StudentEntry.TABLE_NAME, null, values);
+    }
+
+    public void update(SQLiteDatabase wdb, Student student, String condition, String[] conditionArg){
+        ContentValues values = Student.toContentValues(student);
+        int affectedRows = wdb.update(StudentEntry.TABLE_NAME,values,condition,conditionArg);
     }
 }

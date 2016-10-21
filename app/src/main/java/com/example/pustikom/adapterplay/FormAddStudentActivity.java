@@ -1,6 +1,7 @@
 package com.example.pustikom.adapterplay;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +43,8 @@ public class FormAddStudentActivity extends AppCompatActivity {
         phoneText = (EditText) findViewById(R.id.edit_phone);
         mailText = (EditText) findViewById(R.id.edit_email);
         genderSpinner = (Spinner) findViewById(R.id.spinner_gender);
+
+        mdb = new StudentDbHelper(this);
 
         //setup spinner
         setupSpinner();
@@ -114,10 +117,12 @@ public class FormAddStudentActivity extends AppCompatActivity {
         String mail = mailText.getText().toString();
         String phone = phoneText.getText().toString();
         StudentList studentList = StudentList.getInstance();
+        SQLiteDatabase db = mdb.getWritableDatabase();
         switch (act) {
             case 0: //mode save
-                student = new Student(0, noreg, name, phone, mail, mGender);
+                student = new Student(noreg, name, phone, mail, mGender);
                 studentList.addStudent(student);
+                mdb.insert(db,student);
                 Toast.makeText(getApplicationContext(), "Student successfully added", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
@@ -125,6 +130,7 @@ public class FormAddStudentActivity extends AppCompatActivity {
                 int id=student.getId();
                 student = new Student(id, noreg,name, phone, mail,mGender);
                 studentList.set(id,student);
+                //TODO: update database for this row
                 Toast.makeText(getApplicationContext(),"Student successfully edited", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
