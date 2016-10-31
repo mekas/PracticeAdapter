@@ -19,6 +19,9 @@ import com.example.pustikom.adapterplay.db.StudentEntry;
 import com.example.pustikom.adapterplay.user.Student;
 import com.example.pustikom.adapterplay.user.StudentList;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by pustikom on 12/10/16.
  */
@@ -67,7 +70,6 @@ public class FormAddStudentActivity extends AppCompatActivity {
             genderSpinner.setSelection(student.getGender());
         }
 
-
         FloatingActionButton cancelButton = (FloatingActionButton) findViewById(R.id.cancelActionButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +83,12 @@ public class FormAddStudentActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveData();
+                String name = nameText.getText().toString();
+                String noreg = noregText.getText().toString();
+                String phone = phoneText.getText().toString();
+                String mail = mailText.getText().toString();
+                if(validate(noreg,name,phone,mail))
+                    saveData(noreg, name, phone, mail);
             }
         });
     }
@@ -111,12 +118,8 @@ public class FormAddStudentActivity extends AppCompatActivity {
         });
     }
 
-    private void saveData() {
-        String name = nameText.getText().toString();
-        String noreg = noregText.getText().toString();
-        String mail = mailText.getText().toString();
-        String phone = phoneText.getText().toString();
-        StudentList studentList = StudentList.getInstance();
+    private void saveData(String noreg,String name, String phone, String mail) {
+        //StudentList studentList = StudentList.getInstance();
         SQLiteDatabase db = mdb.getWritableDatabase();
         switch (act) {
             case 0: //mode save
@@ -131,7 +134,6 @@ public class FormAddStudentActivity extends AppCompatActivity {
                 long id=student.getId();
                 student = new Student(id, noreg,name, phone, mail,mGender);
                 //studentList.set((int) id,student);
-                //TODO: update database for this row
                 String condition = StudentEntry._ID + "=?";
                 String[] conditionArg = {id + ""};
                 int affectedRows =mdb.update(db,student,condition,conditionArg);
@@ -139,6 +141,37 @@ public class FormAddStudentActivity extends AppCompatActivity {
                 finish();
                 break;
         }
+    }
+
+    public boolean validate(String noreg, String name, String phone, String mail){
+        boolean isValidate=true;
+
+        if(noreg.length()!=8){
+            noregText.setError("NIM must be 8 digits");
+            isValidate=false;
+        }
+
+        if(name.length()==0){
+            nameText.setError("Please fill in your name");
+            isValidate=false;
+        }
+
+        if(isValidEmail(mail) || mail.length()==0){
+            mailText.setError("Please fill with proper email format");
+            isValidate=false;
+        }
+
+        return isValidate;
+    }
+
+    // validating email id
+    private boolean isValidEmail(String email) {
+        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
     @Override
