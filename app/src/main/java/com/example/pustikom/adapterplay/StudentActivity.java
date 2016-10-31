@@ -69,8 +69,7 @@ public class StudentActivity extends AppCompatActivity {
 
         //instantiate reference to database
         mdb = new StudentDbHelper(this);
-        //immedietely load list from database
-        loadStudentFromDB();
+
     }
 
     /**
@@ -121,6 +120,8 @@ public class StudentActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+        //immedietely load list from database
+        loadStudentFromDB();
         //prepare emptyView
         TextView mEmptyTextView =(TextView) findViewById(R.id.empty_view);
         studentListView.setEmptyView(mEmptyTextView);
@@ -145,7 +146,7 @@ public class StudentActivity extends AppCompatActivity {
         studentArrayList.add(new Student("3145136188","TRI FEBRIANA SIAMI","0858xxxxxx","tri@mhs.unj.ac.id", StudentEntry.CODE_FEMALE));
         studentArrayList.add(new Student("3145136192","Ummu Kultsum","0813xxxxxx","ummu@mhs.unj.ac.id", StudentEntry.CODE_FEMALE));
 
-        insertFromList(studentArrayList);
+        insertToDbFromList(studentArrayList);
         //post inserting to database then set the adapter, don't mistaken on the order
         studentList.AddStudents(studentArrayList);
         studentArrayAdapter = new StudentArrayAdapter(this,studentList.getList());
@@ -156,7 +157,7 @@ public class StudentActivity extends AppCompatActivity {
      * Insert list data to database
      * @param students
      */
-    private void insertFromList(ArrayList<Student> students){
+    private void insertToDbFromList(ArrayList<Student> students){
         SQLiteDatabase db = mdb.getWritableDatabase();
         for (Student student: students
              ) {

@@ -121,7 +121,8 @@ public class FormAddStudentActivity extends AppCompatActivity {
         switch (act) {
             case 0: //mode save
                 student = new Student(noreg, name, phone, mail, mGender);
-                studentList.addStudentWithIdTamper(student);
+                //now we do not need to store to the database
+                //studentList.addStudentWithIdTamper(student);
                 mdb.insert(db,student);
                 Toast.makeText(getApplicationContext(), "Student successfully added", Toast.LENGTH_SHORT).show();
                 finish();
@@ -129,8 +130,11 @@ public class FormAddStudentActivity extends AppCompatActivity {
             case 1: //mode edit
                 long id=student.getId();
                 student = new Student(id, noreg,name, phone, mail,mGender);
-                studentList.set((int) id,student);
+                //studentList.set((int) id,student);
                 //TODO: update database for this row
+                String condition = StudentEntry._ID + "=?";
+                String[] conditionArg = {id + ""};
+                int affectedRows =mdb.update(db,student,condition,conditionArg);
                 Toast.makeText(getApplicationContext(),"Student successfully edited", Toast.LENGTH_SHORT).show();
                 finish();
                 break;

@@ -2,6 +2,7 @@ package com.example.pustikom.adapterplay.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -61,9 +62,10 @@ public class StudentDbHelper extends SQLiteOpenHelper {
         student.setId(rowId);
     }
 
-    public void update(SQLiteDatabase wdb, Student student, String condition, String[] conditionArg){
+    public int update(SQLiteDatabase wdb, Student student, String condition, String[] conditionArg){
         ContentValues values = Student.toContentValues(student);
         int affectedRows = wdb.update(StudentEntry.TABLE_NAME,values,condition,conditionArg);
+        return affectedRows;
     }
 
     public void truncate(SQLiteDatabase db){
