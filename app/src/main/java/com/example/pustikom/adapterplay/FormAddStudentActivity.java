@@ -170,7 +170,12 @@ public class FormAddStudentActivity extends AppCompatActivity {
             case R.id.delete_item:
                 //get current id
                 long id = student.getId();
-                StudentList.getInstance().remove((int) id);
+                //delete from database
+                String condition = StudentEntry._ID + "=?";
+                String[] conditionArgs = {id+""};
+                //we are not necessary anymore to delete from database
+                mdb.delete(mdb.getWritableDatabase(),condition,conditionArgs);
+                //StudentList.getInstance().remove((int) id);
                 finish();
                 return true;
         }

@@ -72,4 +72,9 @@ public class StudentDbHelper extends SQLiteOpenHelper {
         String sql = "DELETE FROM " + StudentEntry.TABLE_NAME + ";VACUUM;";
         db.execSQL(sql);
     }
+
+    public int delete(SQLiteDatabase db, String condition, String[] conditionArg){
+        int affectedRows = db.delete(StudentEntry.TABLE_NAME,condition, conditionArg);
+        return affectedRows;
+    }
 }
