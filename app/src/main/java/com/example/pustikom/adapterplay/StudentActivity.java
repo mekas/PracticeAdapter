@@ -1,10 +1,13 @@
 package com.example.pustikom.adapterplay;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import com.example.pustikom.adapterplay.com.example.pustikom.adapter.StudentArrayAdapter;
@@ -17,6 +20,8 @@ import java.util.ArrayList;
  */
 
 public class StudentActivity extends AppCompatActivity {
+    private FloatingActionButton addButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +32,16 @@ public class StudentActivity extends AppCompatActivity {
         ListView list_item = (ListView) findViewById(R.id.list_item);
         list_item.setAdapter(studentArrayAdapter);
 
+        //register button
+        addButton  = (FloatingActionButton) findViewById(R.id.floatingAddButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: open StudentFormActivity
+                Intent intent = new Intent(StudentActivity.this, StudentFormActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private ArrayList<Student> populateStudentDummies(){
