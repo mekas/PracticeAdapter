@@ -13,26 +13,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/EditStyle"
-            android:text="No. "/>
+            android:text="No. "
+            android:textColor="@color/colorAccent" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/EditStyle"
+            android:textColor="@color/colorAccent"
             android:text="NIM"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/EditStyle"
+            android:textColor="@color/colorAccent"
             android:text="Nama"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/EditStyle"
+            android:textColor="@color/colorAccent"
             android:text="Email"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/EditStyle"
+            android:textColor="@color/colorAccent"
             android:text="Phone"/>
     </LinearLayout>
 
