@@ -58,7 +58,6 @@ public class StudentFormActivity extends AppCompatActivity {
                 break;
             case 1:
                 setTitle("Edit Student");
-                //Todo: case edit preload all edit text with passed data
                 student = (Student) intent.getSerializableExtra("Student");
                 nimText.setText(student.getNoreg());
                 nameText.setText(student.getName());
@@ -100,37 +99,27 @@ public class StudentFormActivity extends AppCompatActivity {
         //change isValidated to false for each error found
         boolean isValidated=true;
 
-        if(student.getName().length()==0){
-            nameText.setError("Please input name");
-            isValidated=false;
-        }
-
-        if(student.getNoreg().length()!=8) {
-            nimText.setError("NIM must be 8 character");
-            isValidated=false;
-        }
         return isValidated;
     }
 
     /**
-     * Todo: implement save data
+     * implement save data
      * @param student
      */
     private void saveStudent(Student student,int mode){
         if(mode==0){
             //add current student to global StudentList
-            Student.getStudentList().add(student.getId(),student);
+            //TODO: implement data save for add Mode
         } else{
-            Student.getStudentList().set(student.getId(),student);
+            //Todo: implement data save for edit mode
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
-        //TODO: Only load menu when in edit Mode
-        if(actionMode==1)
-            inflater.inflate(R.menu.edit_student_menu, menu);
+        //TODO: Only load delete menu when in edit Mode
+
         return true;
     }
 
@@ -138,8 +127,7 @@ public class StudentFormActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.deleteStudentItem:
                 //Todo: Implement action for delete student
-                int id=student.getId();
-                Student.getStudentList().remove(id);
+
                 finish();
                 return true;
         }

@@ -53,9 +53,8 @@ public class StudentActivity extends AppCompatActivity {
                 Intent intent = new Intent(StudentActivity.this, StudentFormActivity.class);
                 intent.putExtra("mode",1);
 
-                //Todo get current student from StudentList based on position
-                Student student = Student.getStudentList().get(position);
-                intent.putExtra("Student",student);
+                //Todo: get current student from StudentList based on position then past student as Intent Extra
+
                 startActivity(intent);
             }
         });
@@ -66,9 +65,8 @@ public class StudentActivity extends AppCompatActivity {
         super.onResume();
         //Todo: Refresh list post add or edit student
         //this can be done by reload studentArrayAdapter to current List
-        //relad listItems
-        studentArrayAdapter = new StudentArrayAdapter(this, Student.getStudentList());
-        listItem.setAdapter(studentArrayAdapter);
+        //then reload listItems
+
 
     }
 
@@ -90,17 +88,12 @@ public class StudentActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.createDummyItem:
                 //Todo: add action
-                StudentList students = populateStudentDummies();
-                studentArrayAdapter = new StudentArrayAdapter(this,students);
-                listItem.setAdapter(studentArrayAdapter);
-                Student.setStudentList(students);
+
 
                 return true;
             case R.id.clearListItem:
                 //Todo: add action
-                studentArrayAdapter = new StudentArrayAdapter(this, new StudentList());
-                listItem.setAdapter(studentArrayAdapter);
-                Student.setStudentList(new StudentList());
+
                 return true;
         }
         return super.onOptionsItemSelected(item);

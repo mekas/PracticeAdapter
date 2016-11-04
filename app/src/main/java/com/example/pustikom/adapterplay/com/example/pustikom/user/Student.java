@@ -15,7 +15,6 @@ public class Student implements Serializable {
     private int gender;
 
     private static StudentList studentList=new StudentList();
-
     private static final int GENDER_MALE_CODE=0;
     private static final int GENDER_FEMALE_CODE=1;
     private static final String GENDER_MALE_TEXT="Laki-laki";

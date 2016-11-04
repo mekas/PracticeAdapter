@@ -79,26 +79,22 @@ public class StudentList implements List<Student> {
     }
 
     /**
-     * Todo: if list empty return true, else false
+     * Todo: if current list is empty return true, false otherwise
      * @return
      */
     @Override
     public boolean isEmpty() {
-        if(studentList.size()==0)
-            return true;
+
         return false;
     }
 
     /**
-     * Todo: When adding student set the id of the student according to the row index allocated
+     * Todo: When adding student set the id of the student according to the current row index allocated
      * @param student
      * @return
      */
     @Override
     public boolean add(Student student) {
-        int id = this.size();
-        student.setId(id);
-        studentList.add(student);
         return true;
     }
 
@@ -107,7 +103,7 @@ public class StudentList implements List<Student> {
      */
     @Override
     public void clear(){
-        studentList.clear();
+
     }
 
     /**
@@ -117,19 +113,19 @@ public class StudentList implements List<Student> {
      */
     @Override
     public Student get(int index) {
-        return studentList.get(index);
+        return null;
     }
 
     /**
-     * Todo: change the element of given index
+     * Todo: Replace current Element of the given index with passed element
      * @param index
      * @param element
-     * @return previous student before replaced
+     * @return previous student element before replaced
      */
     @Override
     public Student set(int index, Student element) {
-        element.setId(index);
-        return studentList.set(index, element);
+        //Don't forget you need to change student id
+        return null;
     }
 
     /**
@@ -141,29 +137,17 @@ public class StudentList implements List<Student> {
      */
     @Override
     public void add(int index, Student element) {
-        element.setId(index);
-        studentList.add(index, element);
-        recomputeId(index+1,size());
-    }
-
-    private void recomputeId(int startIndex, int finalIndex){
-        for (int i = startIndex; i < finalIndex; i++) {
-            //Todo: recompute the id
-            Student student = get(i);
-            student.setId(i);
-        }
+        //add new element at certain index affect all elements post given index (the id)
     }
 
     /**
-     * Todo: Remove student of given index, then recalculate all infected student ids
+     * Todo: Remove student of given index, then recalculate all affected student ids
      * @param index
      * @return
      */
     @Override
     public Student remove(int index) {
-        Student student = studentList.remove(index);
-        recomputeId(index,size());
-        return student;
+        return null;
     }
 
     @Override
