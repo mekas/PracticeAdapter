@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -18,6 +21,7 @@ import com.example.pustikom.adapterplay.com.example.pustikom.user.Student;
 public class StudentFormActivity extends AppCompatActivity {
     private AppCompatSpinner genderSpinner;
     private int actionMode;
+    private Student student;
     private static final String ADD_MODE="Add Student";
     private static final String EDIT_MODE="Edit Student";
     private EditText nimText, nameText, mailText, phoneText;
@@ -47,6 +51,23 @@ public class StudentFormActivity extends AppCompatActivity {
             }
         });
 
+        actionMode = intent.getIntExtra("mode",0);
+        switch (actionMode){
+            case 0:
+                setTitle("Add Student");
+                break;
+            case 1:
+                setTitle("Edit Student");
+                //Todo: case edit preload all edit text with passed data
+                student = (Student) intent.getSerializableExtra("Student");
+                nimText.setText(student.getNoreg());
+                nameText.setText(student.getName());
+                mailText.setText(student.getMail());
+                phoneText.setText(student.getPhone());
+                genderSpinner.setSelection(student.getGender());
+                break;
+        }
+
         //setup listener
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,24 +77,13 @@ public class StudentFormActivity extends AppCompatActivity {
                 int genderId = genderSpinner.getSelectedItemPosition();
                 String mail = mailText.getText().toString();
                 String phone = phoneText.getText().toString();
-                Student student = new Student(nim,name,genderId,mail,phone);
+                student = new Student(nim,name,genderId,mail,phone);
                 if(validateStudent(student)) {
-                    saveStudent(student);
+                    saveStudent(student,actionMode);
                     finish();
                 }
             }
         });
-
-        actionMode = intent.getIntExtra("mode",0);
-        switch (actionMode){
-            case 0:
-                setTitle("Add Student");
-                break;
-            case 1:
-                setTitle("Edit Student");
-                break;
-        }
-
     }
 
     /**
@@ -85,8 +95,11 @@ public class StudentFormActivity extends AppCompatActivity {
      * @return true if all field validated, false otherwise
      */
     private boolean validateStudent(Student student){
+        //put your code here, set validated to false if input not conformed
+        //use nameText.setError("Please input name"); or nimText.setError("NIM must be 8 character"); in case input invalidated
+        //change isValidated to false for each error found
         boolean isValidated=true;
-        //Todo: put your code here, set validated to false if input not conformed
+
         if(student.getName().length()==0){
             nameText.setError("Please input name");
             isValidated=false;
@@ -103,7 +116,33 @@ public class StudentFormActivity extends AppCompatActivity {
      * Todo: implement save data
      * @param student
      */
-    private void saveStudent(Student student){
+    private void saveStudent(Student student,int mode){
+        if(mode==0){
+            //add current student to global StudentList
+            Student.getStudentList().add(student.getId(),student);
+        } else{
+            Student.getStudentList().set(student.getId(),student);
+        }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        //TODO: Only load menu when in edit Mode
+        if(actionMode==1)
+            inflater.inflate(R.menu.edit_student_menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.deleteStudentItem:
+                //Todo: Implement action for delete student
+                int id=student.getId();
+                Student.getStudentList().remove(id);
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
