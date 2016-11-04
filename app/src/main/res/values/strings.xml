@@ -4,4 +4,9 @@
     <string name="teacher_list">List of Lecturers</string>
     <!-- Default to Add Student-->
     <string name="student_form">Add Student</string>
+    <string-array name="gender_array">
+        <item>Laki-laki</item>
+        <item>Perempuan</item>
+    </string-array>
+
 </resources>
