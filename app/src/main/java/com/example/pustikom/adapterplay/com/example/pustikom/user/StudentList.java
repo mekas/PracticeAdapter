@@ -124,31 +124,46 @@ public class StudentList implements List<Student> {
      * Todo: change the element of given index
      * @param index
      * @param element
-     * @return
+     * @return previous student before replaced
      */
     @Override
     public Student set(int index, Student element) {
-        return null;
+        element.setId(index);
+        return studentList.set(index, element);
     }
 
     /**
-     * Todo: add element to given index, then recompute the id of all student position post this index
+     * Todo: Inserts the specified element at the specified position in this list.
+     * Shifts the element currently at that position (if any) and
+     * any subsequent elements to the right (adds one to their indices).
      * @param index
      * @param element
      */
     @Override
     public void add(int index, Student element) {
+        element.setId(index);
+        studentList.add(index, element);
+        recomputeId(index+1,size());
+    }
 
+    private void recomputeId(int startIndex, int finalIndex){
+        for (int i = startIndex; i < finalIndex; i++) {
+            //Todo: recompute the id
+            Student student = get(i);
+            student.setId(i);
+        }
     }
 
     /**
-     * Todo: Remove student of given index
+     * Todo: Remove student of given index, then recalculate all infected student ids
      * @param index
      * @return
      */
     @Override
     public Student remove(int index) {
-        return null;
+        Student student = studentList.remove(index);
+        recomputeId(index,size());
+        return student;
     }
 
     @Override

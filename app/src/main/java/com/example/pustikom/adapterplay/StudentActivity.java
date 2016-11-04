@@ -40,6 +40,7 @@ public class StudentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(StudentActivity.this, StudentFormActivity.class);
+                intent.putExtra("mode",0);
                 startActivity(intent);
             }
         });
@@ -65,10 +66,12 @@ public class StudentActivity extends AppCompatActivity {
                 //Todo: add action
                 StudentList students = populateStudentDummies();
                 studentArrayAdapter = new StudentArrayAdapter(this,students);
+                listItem.setAdapter(studentArrayAdapter);
                 return true;
             case R.id.clearListItem:
                 //Todo: add action
                 studentArrayAdapter = new StudentArrayAdapter(this, new StudentList());
+                listItem.setAdapter(studentArrayAdapter);
                 return true;
         }
         return super.onOptionsItemSelected(item);
