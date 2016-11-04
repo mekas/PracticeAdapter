@@ -36,7 +36,7 @@
                 android:value=".MainActivity"/>
         </activity>
 
-        <!-- TODO: register StudentFormActivity-->
+        <!--  register StudentFormActivity-->
         <activity
             android:name=".StudentFormActivity"
             android:label="@string/student_form"

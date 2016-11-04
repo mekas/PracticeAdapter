@@ -79,45 +79,50 @@ public class StudentList implements List<Student> {
     }
 
     /**
-     * Todo: if current list is empty return true, false otherwise
+     *  if current list is empty return true, false otherwise
      * @return
      */
     @Override
     public boolean isEmpty() {
-
+        if (studentList.size()==0){
+            return true;
+        }
         return false;
     }
 
     /**
-     * Todo: When adding student set the id of the student according to the current row index allocated
+     *  When adding student set the id of the student according to the current row index allocated
      * @param student
      * @return
      */
     @Override
     public boolean add(Student student) {
+        studentList.add(student);
+        student.setId(size());
         return true;
     }
 
     /**
-     * Todo: clear the list
+     *  clear the list
      */
     @Override
     public void clear(){
-
+        studentList.clear();
     }
 
     /**
-     * Todo: return current student
+     *  return current student
      * @param index
      * @return
      */
     @Override
-    public Student get(int index) {
-        return null;
+    public Student get(int index){
+        Student stud = studentList.get(index);
+        return stud;
     }
 
     /**
-     * Todo: Replace current Element of the given index with passed element
+     *  Replace current Element of the given index with passed element
      * @param index
      * @param element
      * @return previous student element before replaced
@@ -125,11 +130,14 @@ public class StudentList implements List<Student> {
     @Override
     public Student set(int index, Student element) {
         //Don't forget you need to change student id
-        return null;
+        Student prevStudent = studentList.get(index);
+        studentList.set(index, element);
+        element.setId(index);
+        return prevStudent;
     }
 
     /**
-     * Todo: Inserts the specified element at the specified position in this list.
+     *  Inserts the specified element at the specified position in this list.
      * Shifts the element currently at that position (if any) and
      * any subsequent elements to the right (adds one to their indices).
      * @param index
@@ -138,16 +146,27 @@ public class StudentList implements List<Student> {
     @Override
     public void add(int index, Student element) {
         //add new element at certain index affect all elements post given index (the id)
+        studentList.add(index, element);
+        for(int i = index; i<size(); i++){
+            Student adding = studentList.get(i);
+            adding.setId(i);
+        }
     }
 
     /**
-     * Todo: Remove student of given index, then recalculate all affected student ids
+     *
+     *  Remove student of given index, then recalculate all affected student ids
      * @param index
      * @return
      */
     @Override
     public Student remove(int index) {
-        return null;
+        Student delete = studentList.remove(index);
+        for (int i = index; i<size(); i++){
+            Student s = studentList.get(i);
+            s.setId(i);
+        }
+        return delete;
     }
 
     @Override

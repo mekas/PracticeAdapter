@@ -53,8 +53,9 @@ public class StudentActivity extends AppCompatActivity {
                 Intent intent = new Intent(StudentActivity.this, StudentFormActivity.class);
                 intent.putExtra("mode",1);
 
-                //Todo: get current student from StudentList based on position then past student as Intent Extra
-
+                // get current student from StudentList based on position then past student as Intent Extra
+                Student currentStudent = Student.getStudentList().get(position);
+                intent.putExtra("student", currentStudent);
                 startActivity(intent);
             }
         });
@@ -63,10 +64,11 @@ public class StudentActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        //Todo: Refresh list post add or edit student
+        // Refresh list post add or edit student
         //this can be done by reload studentArrayAdapter to current List
         //then reload listItems
-
+        studentArrayAdapter = new StudentArrayAdapter(this, Student.getStudentList());
+        listItem.setAdapter(studentArrayAdapter);
 
     }
 
@@ -84,16 +86,21 @@ public class StudentActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptioItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.createDummyItem:
-                //Todo: add action
-
-
+                // add action
+                StudentList dummies = populateStudentDummies();
+                studentArrayAdapter = new StudentArrayAdapter(this, dummies);
+                listItem.setAdapter(studentArrayAdapter);
+                Student.setStudentList(dummies);
                 return true;
             case R.id.clearListItem:
-                //Todo: add action
-
+                // add action
+                studentArrayAdapter = new StudentArrayAdapter(this, new StudentList());
+                listItem.setAdapter(studentArrayAdapter);
+                //Student.setStudentList(new StudentList());
+                Student.getStudentList().clear();
                 return true;
         }
         return super.onOptionsItemSelected(item);

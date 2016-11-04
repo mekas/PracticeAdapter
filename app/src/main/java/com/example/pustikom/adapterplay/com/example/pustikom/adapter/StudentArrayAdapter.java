@@ -42,8 +42,13 @@ public class StudentArrayAdapter extends ArrayAdapter<Student> {
         idView.setText(student.getId() + "");
         noregView.setText(student.getNoreg());
         nameView.setText(student.getName());
-        //Todo: Instead of display number 0 or 1, display String L or P
-        genderView.setText(student.getGender() + "");
+        // Instead of display number 0 or 1, display String L or P
+        //genderView.setText(student.getGender() + "");
+        if(student.getGender()==0){
+            genderView.setText("L");
+        }else if(student.getGender()==1){
+            genderView.setText("P");
+        }
         mailView.setText(student.getMail());
         phoneView.setText(student.getPhone());
         return view;

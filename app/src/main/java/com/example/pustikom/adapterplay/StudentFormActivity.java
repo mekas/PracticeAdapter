@@ -86,7 +86,7 @@ public class StudentFormActivity extends AppCompatActivity {
     }
 
     /**
-     * Todo: implement validation the criterias are
+     *  implement validation the criterias are
      * 1. NIM must be all numbers and 8 digits
      * 2. Name must not be empty
      * 3. Any other field are optionals
@@ -98,7 +98,14 @@ public class StudentFormActivity extends AppCompatActivity {
         //use nameText.setError("Please input name"); or nimText.setError("NIM must be 8 character"); in case input invalidated
         //change isValidated to false for each error found
         boolean isValidated=true;
-
+        if (student.getNoreg().length()!=8){
+            isValidated=false;
+            nimText.setError("NIM must be 8 character");
+        }
+        if(student.getName().length()==0){
+            isValidated=false;
+            nameText.setError("Please input name");
+        }
         return isValidated;
     }
 
@@ -109,25 +116,31 @@ public class StudentFormActivity extends AppCompatActivity {
     private void saveStudent(Student student,int mode){
         if(mode==0){
             //add current student to global StudentList
-            //TODO: implement data save for add Mode
+            // implement data save for add Mode
+            Student.getStudentList().add(student);
         } else{
-            //Todo: implement data save for edit mode
+            // implement data save for edit mode
+            int index = student.getId();
+            Student.getStudentList().set(index, student);
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
-        //TODO: Only load delete menu when in edit Mode
-
+        // Only load delete menu when in edit Mode
+        if(actionMode==1){
+            inflater.inflate(R.menu.edit_student_menu, menu);
+        }
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.deleteStudentItem:
-                //Todo: Implement action for delete student
-
+                // Implement action for delete student
+                int id = student.getId();
+                Student.getStudentList().remove(id);
                 finish();
                 return true;
         }
