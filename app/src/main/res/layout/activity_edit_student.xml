@@ -42,7 +42,6 @@
             <TextView
                 style="@style/EditStyle"
                 android:text="NIM"
-                android:inputType="number"
                 android:textColor="@color/colorAccent" />
 
             <TextView
@@ -63,7 +62,6 @@
             <TextView
                 style="@style/EditStyle"
                 android:text="Phone"
-                android:inputType="number"
                 android:textColor="@color/colorAccent" />
         </LinearLayout>
 
@@ -75,6 +73,7 @@
 
             <EditText
                 android:id="@+id/edit_nim"
+                android:inputType="number"
                 style="@style/EditStyle" />
 
             <EditText
@@ -92,6 +91,7 @@
 
             <EditText
                 android:id="@+id/edit_phone"
+                android:inputType="number"
                 style="@style/EditStyle" />
 
         </LinearLayout>

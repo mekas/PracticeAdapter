@@ -57,9 +57,10 @@ public class StudentFormActivity extends AppCompatActivity {
                 String mail = mailText.getText().toString();
                 String phone = phoneText.getText().toString();
                 Student student = new Student(nim,name,genderId,mail,phone);
-                if(validateStudent(student))
+                if(validateStudent(student)) {
                     saveStudent(student);
                     finish();
+                }
             }
         });
 
@@ -84,8 +85,18 @@ public class StudentFormActivity extends AppCompatActivity {
      * @return true if all field validated, false otherwise
      */
     private boolean validateStudent(Student student){
-        //Todo: put your code here
-        return true;
+        boolean isValidated=true;
+        //Todo: put your code here, set validated to false if input not conformed
+        if(student.getName().length()==0){
+            nameText.setError("Please input name");
+            isValidated=false;
+        }
+
+        if(student.getNoreg().length()!=8) {
+            nimText.setError("NIM must be 8 character");
+            isValidated=false;
+        }
+        return isValidated;
     }
 
     /**

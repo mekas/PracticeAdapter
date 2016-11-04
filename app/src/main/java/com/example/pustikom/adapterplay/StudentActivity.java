@@ -46,6 +46,12 @@ public class StudentActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        //Todo: Refresh list post add or edit student
+    }
+
     private StudentList populateStudentDummies(){
         StudentList studentList = new StudentList();
         studentList.add(new Student("3145136188","TRI FEBRIANA SIAMI",1,"tri@mhs.unj.ac.id","0858xxxxxx"));
