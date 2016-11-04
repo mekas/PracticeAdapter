@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,7 +23,7 @@
         android:clickable="true"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_done_black_24dp"
-        android:id="@+id/floatingAddButton"
+        android:id="@+id/floatingSaveButton"
         android:layout_margin="18dp"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@id/floatingCancelButton"/>
@@ -41,6 +42,7 @@
             <TextView
                 style="@style/EditStyle"
                 android:text="NIM"
+                android:inputType="number"
                 android:textColor="@color/colorAccent" />
 
             <TextView
@@ -61,6 +63,7 @@
             <TextView
                 style="@style/EditStyle"
                 android:text="Phone"
+                android:inputType="number"
                 android:textColor="@color/colorAccent" />
         </LinearLayout>
 

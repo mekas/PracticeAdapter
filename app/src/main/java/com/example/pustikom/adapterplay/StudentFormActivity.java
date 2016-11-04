@@ -32,8 +32,8 @@ public class StudentFormActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         //register Views
-        FloatingActionButton saveButton = (FloatingActionButton) findViewById(R.id.saveActionButton);
-        FloatingActionButton cancelButton = (FloatingActionButton) findViewById(R.id.cancelActionButton);
+        FloatingActionButton saveButton = (FloatingActionButton) findViewById(R.id.floatingSaveButton);
+        FloatingActionButton cancelButton = (FloatingActionButton) findViewById(R.id.floatingCancelButton);
         nimText = (EditText) findViewById(R.id.edit_nim);
         nameText = (EditText) findViewById(R.id.edit_nama);
         mailText = (EditText) findViewById(R.id.edit_email);
@@ -53,10 +53,13 @@ public class StudentFormActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String nim = nimText.getText().toString();
                 String name = nameText.getText().toString();
+                int genderId = genderSpinner.getSelectedItemPosition();
                 String mail = mailText.getText().toString();
                 String phone = phoneText.getText().toString();
-                int genderId = genderSpinner.getSelectedItemPosition();
-                finish();
+                Student student = new Student(nim,name,genderId,mail,phone);
+                if(validateStudent(student))
+                    saveStudent(student);
+                    finish();
             }
         });
 
@@ -70,6 +73,19 @@ public class StudentFormActivity extends AppCompatActivity {
                 break;
         }
 
+    }
+
+    /**
+     * Todo: implement validation the criterias are
+     * 1. NIM must be all numbers and 8 digits
+     * 2. Name must not be empty
+     * 3. Any other field are optionals
+     * @param student
+     * @return true if all field validated, false otherwise
+     */
+    private boolean validateStudent(Student student){
+        //Todo: put your code here
+        return true;
     }
 
     /**

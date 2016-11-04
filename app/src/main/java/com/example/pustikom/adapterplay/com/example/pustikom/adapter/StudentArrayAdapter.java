@@ -34,6 +34,7 @@ public class StudentArrayAdapter extends ArrayAdapter<Student> {
         TextView idView = (TextView) view.findViewById(R.id.student_id);
         TextView noregView = (TextView) view.findViewById(R.id.student_noreg);
         TextView nameView = (TextView) view.findViewById(R.id.student_name);
+        TextView genderView = (TextView) view.findViewById(R.id.student_gender);
         TextView mailView = (TextView) view.findViewById(R.id.student_email);
         TextView phoneView = (TextView) view.findViewById(R.id.student_phone);
 
@@ -41,6 +42,8 @@ public class StudentArrayAdapter extends ArrayAdapter<Student> {
         idView.setText(student.getId() + "");
         noregView.setText(student.getNoreg());
         nameView.setText(student.getName());
+        //Todo: Instead of display number, display String L or P
+        genderView.setText(student.getGender() + "");
         mailView.setText(student.getMail());
         phoneView.setText(student.getPhone());
         return view;
