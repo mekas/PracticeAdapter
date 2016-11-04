@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.pustikom.adapterplay.R;
 import com.example.pustikom.adapterplay.com.example.pustikom.user.Student;
+import com.example.pustikom.adapterplay.com.example.pustikom.user.StudentList;
 
 import org.w3c.dom.Text;
 
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 
 public class StudentArrayAdapter extends ArrayAdapter<Student> {
 
-    public StudentArrayAdapter(Context context, ArrayList<Student> studentArrayList) {
+    public StudentArrayAdapter(Context context, StudentList studentArrayList) {
         super(context, 0, studentArrayList);
     }
 

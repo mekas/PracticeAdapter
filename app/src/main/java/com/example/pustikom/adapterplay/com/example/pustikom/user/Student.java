@@ -12,13 +12,19 @@ public class Student implements Serializable {
     private String name;
     private String phone;
     private String mail;
+    private int gender;
 
-    public Student(int id, String noreg, String name, String phone, String mail){
-        this.id=id;
+    private static final int GENDER_MALE_CODE=0;
+    private static final int GENDER_FEMALE_CODE=1;
+    private static final String GENDER_MALE_TEXT="Laki-laki";
+    private static final String GENDER_FEMALE_TEXT="Perempuan";
+
+    public Student(String noreg, String name, int gender, String mail, String phone){
         this.noreg=noreg;
         this.name=name;
-        this.phone=phone;
+        this.gender=gender;
         this.mail=mail;
+        this.phone=phone;
     }
 
     public String getNoreg() {
@@ -59,5 +65,13 @@ public class Student implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 }

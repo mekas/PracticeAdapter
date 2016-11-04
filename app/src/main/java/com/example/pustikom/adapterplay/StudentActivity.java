@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.example.pustikom.adapterplay.com.example.pustikom.adapter.StudentArrayAdapter;
 import com.example.pustikom.adapterplay.com.example.pustikom.user.Student;
+import com.example.pustikom.adapterplay.com.example.pustikom.user.StudentList;
 
 import java.util.ArrayList;
 
@@ -21,33 +22,33 @@ import java.util.ArrayList;
 
 public class StudentActivity extends AppCompatActivity {
     private FloatingActionButton addButton;
+    private StudentArrayAdapter studentArrayAdapter;
+    private ListView listItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_view);
 
-        ArrayList<Student> students = populateStudentDummies();
-        StudentArrayAdapter studentArrayAdapter = new StudentArrayAdapter(this,students);
-        ListView list_item = (ListView) findViewById(R.id.list_item);
-        list_item.setAdapter(studentArrayAdapter);
+        studentArrayAdapter = new StudentArrayAdapter(this,new StudentList());
+        listItem = (ListView) findViewById(R.id.list_item);
+        listItem.setAdapter(studentArrayAdapter);
 
         //register button
         addButton  = (FloatingActionButton) findViewById(R.id.floatingAddButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: open StudentFormActivity
                 Intent intent = new Intent(StudentActivity.this, StudentFormActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    private ArrayList<Student> populateStudentDummies(){
-        ArrayList<Student> studentList = new ArrayList<Student>();
-        studentList.add(new Student(1,"3145136188","TRI FEBRIANA SIAMI","0858xxxxxx","tri@mhs.unj.ac.id"));
-        studentList.add(new Student(2,"3145136192","Ummu Kultsum","0813xxxxxx","ummu@mhs.unj.ac.id"));
+    private StudentList populateStudentDummies(){
+        StudentList studentList = new StudentList();
+        studentList.add(new Student("3145136188","TRI FEBRIANA SIAMI",1,"tri@mhs.unj.ac.id","0858xxxxxx"));
+        studentList.add(new Student("3145136192","Ummu Kultsum",1,"ummu@mhs.unj.ac.id","0813xxxxxx"));
         return studentList;
     }
 
@@ -61,10 +62,13 @@ public class StudentActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.createDummyItem:
-                //TODO: add action
+                //Todo: add action
+                StudentList students = populateStudentDummies();
+                studentArrayAdapter = new StudentArrayAdapter(this,students);
                 return true;
             case R.id.clearListItem:
-                //TODO: add action
+                //Todo: add action
+                studentArrayAdapter = new StudentArrayAdapter(this, new StudentList());
                 return true;
         }
         return super.onOptionsItemSelected(item);
