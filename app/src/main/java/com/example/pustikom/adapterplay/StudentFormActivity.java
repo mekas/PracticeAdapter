@@ -134,7 +134,7 @@ public class StudentFormActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
-        if(actionMode==1)
+        if(actionMode==1) //menu is only shown in edit mode
             inflater.inflate(R.menu.edit_student_menu, menu);
         return true;
     }
@@ -143,7 +143,9 @@ public class StudentFormActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.deleteStudentItem:
                 int id=student.getId();
-                Student.getStudentList().remove(id);
+                //delete this student
+                SQLiteDatabase wdb = db.getWritableDatabase();
+                db.delete(wdb,id);
                 finish();
                 return true;
         }

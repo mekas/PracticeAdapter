@@ -1,6 +1,7 @@
 package com.example.pustikom.adapterplay;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.pustikom.adapterplay.adapter.StudentArrayAdapter;
+import com.example.pustikom.adapterplay.db.StudentDbHelper;
 import com.example.pustikom.adapterplay.user.Student;
 import com.example.pustikom.adapterplay.user.StudentList;
 
@@ -24,6 +26,8 @@ public class StudentActivity extends AppCompatActivity {
     private FloatingActionButton addButton;
     private StudentArrayAdapter studentArrayAdapter;
     private ListView listItem;
+    private StudentDbHelper db;
+    private StudentList studentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +49,17 @@ public class StudentActivity extends AppCompatActivity {
             }
         });
 
+        db = new StudentDbHelper(getApplicationContext());
+        SQLiteDatabase rdb =db.getReadableDatabase();
+        studentList = db.fetchAllData(rdb);
+
         //set listener for each list item
         listItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(StudentActivity.this, StudentFormActivity.class);
                 intent.putExtra("mode",1);
-                Student student = Student.getStudentList().get(position);
+                Student student = studentList.get(position);
                 intent.putExtra("Student",student);
                 startActivity(intent);
             }
@@ -61,15 +69,21 @@ public class StudentActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+        //after saving reload data from database
+        SQLiteDatabase rdb =db.getReadableDatabase();
+        studentList = db.fetchAllData(rdb);
         //call datasync to resynchronize the data
-        StudentList list = Student.getStudentList();
-        new DataSyncTask().execute(list);
+        new DataSyncTask().execute(studentList);
     }
 
+    //store to database
     private StudentList populateStudentDummies(){
         StudentList studentList = new StudentList();
+        SQLiteDatabase wdb =db.getWritableDatabase();
         studentList.add(new Student("3145136188","TRI FEBRIANA SIAMI",1,"tri@mhs.unj.ac.id","0858xxxxxx"));
+        db.insert(wdb,new Student("3145136188","TRI FEBRIANA SIAMI",1,"tri@mhs.unj.ac.id","0858xxxxxx"));
         studentList.add(new Student("3145136192","Ummu Kultsum",1,"ummu@mhs.unj.ac.id","0813xxxxxx"));
+        db.insert(wdb,new Student("3145136192","Ummu Kultsum",1,"ummu@mhs.unj.ac.id","0813xxxxxx"));
         return studentList;
     }
 
@@ -81,17 +95,16 @@ public class StudentActivity extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
+        StudentList students;
         switch(item.getItemId()){
             case R.id.createDummyItem:
-                StudentList students = populateStudentDummies();
-                studentArrayAdapter = new StudentArrayAdapter(this,students);
-                listItem.setAdapter(studentArrayAdapter);
-                Student.setStudentList(students);
+                students = populateStudentDummies();
+                new DataSyncTask().execute(studentList);
                 return true;
             case R.id.clearListItem:
-                studentArrayAdapter = new StudentArrayAdapter(this, new StudentList());
-                listItem.setAdapter(studentArrayAdapter);
-                Student.setStudentList(new StudentList());
+                SQLiteDatabase wdb = db.getWritableDatabase();
+                db.truncate(wdb);
+                new DataSyncTask().execute(new StudentList());
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -100,12 +113,13 @@ public class StudentActivity extends AppCompatActivity {
     private class DataSyncTask extends AsyncTask<StudentList, Void, StudentArrayAdapter>{
         @Override
         protected StudentArrayAdapter doInBackground(StudentList... params) {
-            StudentArrayAdapter adapter = new StudentArrayAdapter(getApplicationContext(),params[0]);
+            StudentArrayAdapter adapter = new StudentArrayAdapter(StudentActivity.this,params[0]);
             return adapter;
         }
 
         protected void onPostExecute(StudentArrayAdapter adapter){
-            StudentActivity.this.listItem.setAdapter(adapter);
+            listItem = (ListView) findViewById(R.id.list_item);
+            listItem.setAdapter(adapter);
         }
     }
 }

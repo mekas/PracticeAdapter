@@ -2,10 +2,15 @@ package com.example.pustikom.adapterplay.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.pustikom.adapterplay.user.Student;
+import com.example.pustikom.adapterplay.user.StudentList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by pustikom on 21/11/16.
@@ -67,6 +72,47 @@ public class StudentDbHelper extends SQLiteOpenHelper {
         return affectedRows;
     }
 
+    public StudentList fetchAllData(SQLiteDatabase rdb){
+        //define columns to project
+        String[] projection = {
+                StudentEntry._ID, StudentEntry.COLUMN_NIM, StudentEntry.COLUMN_NAME, StudentEntry.COLUMN_GENDER,
+                StudentEntry.COLUMN_MAIL, StudentEntry.COLUMN_PHONE
+        };
+        Cursor cursor = rdb.query(
+                StudentEntry.TABLE_NAME, //table to query
+                projection, //columns to project
+                null, //column for the where clause
+                null, //value for the where clause
+                null, //group statement
+                null, //don't filter by row groups
+                null); //order by statemnt
+
+        //figure out column index given id
+        int idIndex = cursor.getColumnIndex(StudentEntry._ID);
+        int nimIndex = cursor.getColumnIndex(StudentEntry.COLUMN_NIM);
+        int nameIndex = cursor.getColumnIndex(StudentEntry.COLUMN_NAME);
+        int genderIndex = cursor.getColumnIndex(StudentEntry.COLUMN_GENDER);
+        int phoneIndex = cursor.getColumnIndex(StudentEntry.COLUMN_PHONE);
+        int mailIndex = cursor.getColumnIndex(StudentEntry.COLUMN_MAIL);
+
+        StudentList studentList = new StudentList();
+        while(cursor.moveToNext()){
+            long id = cursor.getLong(idIndex);
+            String nim = cursor.getString(nimIndex);
+            String name = cursor.getString(nameIndex);
+            int gender = cursor.getInt(genderIndex);
+            String mail = cursor.getString(mailIndex);
+            String phone = cursor.getString(phoneIndex);
+            //create student instance based on these data
+            Student student = new Student(nim,name,gender,mail,phone);
+
+            studentList.add(student);
+        }
+
+        cursor.close();
+        return studentList;
+    }
+
     /**
      * Truncate rows from table student
      * @param db
@@ -79,11 +125,11 @@ public class StudentDbHelper extends SQLiteOpenHelper {
     /**
      * Delete certain row based on condition
      * @param db
-     * @param condition
-     * @param conditionArg
      * @return
      */
-    public int delete(SQLiteDatabase db, String condition, String[] conditionArg){
+    public int delete(SQLiteDatabase db, int id){
+        String condition = StudentEntry._ID + "=?";
+        String[] conditionArg = {id + ""};
         int affectedRows = db.delete(StudentEntry.TABLE_NAME,condition, conditionArg);
         return affectedRows;
     }
