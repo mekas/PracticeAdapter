@@ -1,6 +1,7 @@
 package com.example.pustikom.adapterplay;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -52,8 +53,6 @@ public class StudentActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(StudentActivity.this, StudentFormActivity.class);
                 intent.putExtra("mode",1);
-
-                //Todo get current student from StudentList based on position
                 Student student = Student.getStudentList().get(position);
                 intent.putExtra("Student",student);
                 startActivity(intent);
@@ -64,12 +63,9 @@ public class StudentActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        //Todo: Refresh list post add or edit student
-        //this can be done by reload studentArrayAdapter to current List
-        //relad listItems
-        studentArrayAdapter = new StudentArrayAdapter(this, Student.getStudentList());
-        listItem.setAdapter(studentArrayAdapter);
-
+        //call datasync to resynchronize the data
+        StudentList list = Student.getStudentList();
+        new DataSyncTask().execute(list);
     }
 
     private StudentList populateStudentDummies(){
@@ -89,7 +85,6 @@ public class StudentActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.createDummyItem:
-                //Todo: add action
                 StudentList students = populateStudentDummies();
                 studentArrayAdapter = new StudentArrayAdapter(this,students);
                 listItem.setAdapter(studentArrayAdapter);
@@ -97,12 +92,24 @@ public class StudentActivity extends AppCompatActivity {
 
                 return true;
             case R.id.clearListItem:
-                //Todo: add action
                 studentArrayAdapter = new StudentArrayAdapter(this, new StudentList());
                 listItem.setAdapter(studentArrayAdapter);
                 Student.setStudentList(new StudentList());
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class DataSyncTask extends AsyncTask<StudentList, Void, StudentArrayAdapter>{
+
+        @Override
+        protected StudentArrayAdapter doInBackground(StudentList... params) {
+            StudentArrayAdapter adapter = new StudentArrayAdapter(getApplicationContext(),params[0]);
+            return adapter;
+        }
+
+        protected void onPostExecute(StudentArrayAdapter adapter){
+            StudentActivity.this.listItem.setAdapter(adapter);
+        }
     }
 }
