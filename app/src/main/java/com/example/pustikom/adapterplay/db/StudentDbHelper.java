@@ -62,6 +62,7 @@ public class StudentDbHelper extends SQLiteOpenHelper {
     public void insert(SQLiteDatabase wdb, Student student){
         ContentValues values = Student.toContentValues(student);
         long rowId = wdb.insert(StudentEntry.TABLE_NAME, null, values);
+        student.setId((int)rowId);
     }
 
     public int update(SQLiteDatabase wdb, Student student){
@@ -104,7 +105,7 @@ public class StudentDbHelper extends SQLiteOpenHelper {
             String mail = cursor.getString(mailIndex);
             String phone = cursor.getString(phoneIndex);
             //create student instance based on these data
-            Student student = new Student(nim,name,gender,mail,phone);
+            Student student = new Student((int)id, nim,name,gender,mail,phone);
 
             studentList.add(student);
         }

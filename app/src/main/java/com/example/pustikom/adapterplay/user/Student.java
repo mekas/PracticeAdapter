@@ -31,6 +31,15 @@ public class Student implements Serializable {
         this.phone=phone;
     }
 
+    public Student(int id, String noreg, String name, int gender, String mail, String phone){
+        this.id=id;
+        this.noreg=noreg;
+        this.name=name;
+        this.gender=gender;
+        this.mail=mail;
+        this.phone=phone;
+    }
+
     public String getNoreg() {
         return noreg;
     }

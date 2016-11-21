@@ -99,7 +99,6 @@ public class StudentList implements List<Student> {
     @Override
     public boolean add(Student student) {
         int id = this.size();
-        student.setId(id);
         studentList.add(student);
         return true;
     }

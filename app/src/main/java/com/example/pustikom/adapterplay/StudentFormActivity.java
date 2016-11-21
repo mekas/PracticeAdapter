@@ -79,7 +79,7 @@ public class StudentFormActivity extends AppCompatActivity {
                 int genderId = genderSpinner.getSelectedItemPosition();
                 String mail = mailText.getText().toString();
                 String phone = phoneText.getText().toString();
-                student = new Student(nim,name,genderId,mail,phone);
+                student = new Student(student.getId(), nim,name,genderId,mail,phone);
                 if(validateStudent(student)) {
                     saveStudent(student,actionMode);
                     finish();
