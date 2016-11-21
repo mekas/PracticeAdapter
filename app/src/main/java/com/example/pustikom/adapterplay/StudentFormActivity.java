@@ -58,7 +58,6 @@ public class StudentFormActivity extends AppCompatActivity {
                 break;
             case 1:
                 setTitle("Edit Student");
-                //Todo: case edit preload all edit text with passed data
                 student = (Student) intent.getSerializableExtra("Student");
                 nimText.setText(student.getNoreg());
                 nameText.setText(student.getName());
