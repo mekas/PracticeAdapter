@@ -79,7 +79,7 @@ public class StudentList implements List<Student> {
     }
 
     /**
-     * Todo: if list empty return true, else false
+     *
      * @return
      */
     @Override
@@ -90,7 +90,7 @@ public class StudentList implements List<Student> {
     }
 
     /**
-     * Todo: When adding student set the id of the student according to the row index allocated
+     *
      * @param student
      * @return
      */
@@ -103,7 +103,7 @@ public class StudentList implements List<Student> {
     }
 
     /**
-     * Todo: clear the list
+     *
      */
     @Override
     public void clear(){
@@ -111,7 +111,7 @@ public class StudentList implements List<Student> {
     }
 
     /**
-     * Todo: return current student
+     *
      * @param index
      * @return
      */
@@ -121,7 +121,7 @@ public class StudentList implements List<Student> {
     }
 
     /**
-     * Todo: change the element of given index
+     *
      * @param index
      * @param element
      * @return previous student before replaced
@@ -133,7 +133,7 @@ public class StudentList implements List<Student> {
     }
 
     /**
-     * Todo: Inserts the specified element at the specified position in this list.
+     *
      * Shifts the element currently at that position (if any) and
      * any subsequent elements to the right (adds one to their indices).
      * @param index
@@ -148,14 +148,13 @@ public class StudentList implements List<Student> {
 
     private void recomputeId(int startIndex, int finalIndex){
         for (int i = startIndex; i < finalIndex; i++) {
-            //Todo: recompute the id
             Student student = get(i);
             student.setId(i);
         }
     }
 
     /**
-     * Todo: Remove student of given index, then recalculate all infected student ids
+     *
      * @param index
      * @return
      */

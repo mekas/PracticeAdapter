@@ -89,7 +89,6 @@ public class StudentActivity extends AppCompatActivity {
                 studentArrayAdapter = new StudentArrayAdapter(this,students);
                 listItem.setAdapter(studentArrayAdapter);
                 Student.setStudentList(students);
-
                 return true;
             case R.id.clearListItem:
                 studentArrayAdapter = new StudentArrayAdapter(this, new StudentList());
@@ -101,7 +100,6 @@ public class StudentActivity extends AppCompatActivity {
     }
 
     private class DataSyncTask extends AsyncTask<StudentList, Void, StudentArrayAdapter>{
-
         @Override
         protected StudentArrayAdapter doInBackground(StudentList... params) {
             StudentArrayAdapter adapter = new StudentArrayAdapter(getApplicationContext(),params[0]);

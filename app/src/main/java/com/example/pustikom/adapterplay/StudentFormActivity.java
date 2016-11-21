@@ -119,7 +119,7 @@ public class StudentFormActivity extends AppCompatActivity {
     private void saveStudent(Student student,int mode){
         if(mode==0){
             //add current student to global StudentList
-            Student.getStudentList().add(student.getId(),student);
+            Student.getStudentList().add(student);
         } else{
             Student.getStudentList().set(student.getId(),student);
         }
