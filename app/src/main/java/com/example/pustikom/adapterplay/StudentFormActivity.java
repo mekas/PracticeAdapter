@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
-import com.example.pustikom.adapterplay.com.example.pustikom.user.Student;
+import com.example.pustikom.adapterplay.user.Student;
 
 /**
  * Created by eka on 04/11/16.

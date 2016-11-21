@@ -6,10 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.pustikom.adapterplay.com.example.pustikom.user.Student;
-
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
 
     private TextView studentView, teacherView;

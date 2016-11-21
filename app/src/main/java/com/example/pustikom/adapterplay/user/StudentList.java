@@ -1,6 +1,8 @@
-package com.example.pustikom.adapterplay.com.example.pustikom.user;
+package com.example.pustikom.adapterplay.user;
 
 import android.support.annotation.NonNull;
+
+import com.example.pustikom.adapterplay.user.Student;
 
 import java.util.ArrayList;
 import java.util.Collection;
