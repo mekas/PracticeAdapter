@@ -70,6 +70,7 @@ public class StudentDbHelper extends SQLiteOpenHelper {
         String condition = StudentEntry._ID + "=?";
         String[] conditionArg = {student.getId() + ""};
         int affectedRows = wdb.update(StudentEntry.TABLE_NAME,values,condition,conditionArg);
+
         return affectedRows;
     }
 
