@@ -59,8 +59,10 @@ public class StudentDbHelper extends SQLiteOpenHelper {
         long rowId = wdb.insert(StudentEntry.TABLE_NAME, null, values);
     }
 
-    public int update(SQLiteDatabase wdb, Student student, String condition, String[] conditionArg){
+    public int update(SQLiteDatabase wdb, Student student){
         ContentValues values = Student.toContentValues(student);
+        String condition = StudentEntry._ID + "=?";
+        String[] conditionArg = {student.getId() + ""};
         int affectedRows = wdb.update(StudentEntry.TABLE_NAME,values,condition,conditionArg);
         return affectedRows;
     }

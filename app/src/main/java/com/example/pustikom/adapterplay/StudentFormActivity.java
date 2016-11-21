@@ -1,6 +1,7 @@
 package com.example.pustikom.adapterplay;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
+import com.example.pustikom.adapterplay.db.StudentDbHelper;
 import com.example.pustikom.adapterplay.user.Student;
 
 /**
@@ -25,6 +27,7 @@ public class StudentFormActivity extends AppCompatActivity {
     private static final String ADD_MODE="Add Student";
     private static final String EDIT_MODE="Edit Student";
     private EditText nimText, nameText, mailText, phoneText;
+    StudentDbHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,7 @@ public class StudentFormActivity extends AppCompatActivity {
                 }
             }
         });
+        db = new StudentDbHelper(getApplicationContext());
     }
 
     /**
@@ -116,11 +120,14 @@ public class StudentFormActivity extends AppCompatActivity {
      * @param student
      */
     private void saveStudent(Student student,int mode){
+        SQLiteDatabase wdb= db.getWritableDatabase();
         if(mode==0){
             //add current student to global StudentList
-            Student.getStudentList().add(student);
+            //Student.getStudentList().add(student);
+            db.insert(wdb,student);
         } else{
-            Student.getStudentList().set(student.getId(),student);
+            //Student.getStudentList().set(student.getId(),student);
+            db.update(wdb,student);
         }
     }
 
