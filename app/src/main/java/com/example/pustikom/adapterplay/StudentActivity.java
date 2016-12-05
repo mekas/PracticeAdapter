@@ -2,7 +2,6 @@ package com.example.pustikom.adapterplay;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,11 +13,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.pustikom.adapterplay.adapter.StudentArrayAdapter;
 import com.example.pustikom.adapterplay.adapter.StudentCursorAdapter;
 import com.example.pustikom.adapterplay.db.StudentDbHelper;
 import com.example.pustikom.adapterplay.user.Student;
 import com.example.pustikom.adapterplay.user.StudentList;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by pustikom on 07/10/16.
@@ -26,16 +26,18 @@ import com.example.pustikom.adapterplay.user.StudentList;
 
 public class StudentActivity extends AppCompatActivity {
     private FloatingActionButton addButton;
-    //private StudentArrayAdapter studentArrayAdapter;
     private StudentCursorAdapter cursorAdapter;
     private ListView listItem;
     private StudentDbHelper db;
-    //private StudentList studentList;
+    private DatabaseReference mFirebaseDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_view);
+
+        //setup firebase
+        mFirebaseDb = FirebaseDatabase.getInstance().getReference();
 
         //register button
         addButton  = (FloatingActionButton) findViewById(R.id.floatingAddButton);
@@ -75,13 +77,18 @@ public class StudentActivity extends AppCompatActivity {
         new DataSyncTask().execute(db.getCursor());
     }
 
-    //store to database
+    /**
+     * Write to SQLite and Firebase
+     */
     private void populateStudentDummies(){
         Student s1=new Student("3145136188","TRI FEBRIANA SIAMI",1,"tri@mhs.unj.ac.id","0858xxxxxx");
         db.insert(s1);
-
         Student s2=new Student("3145136192","Ummu Kultsum",1,"ummu@mhs.unj.ac.id","0813xxxxxx");
         db.insert(s2);
+
+        //test case
+        mFirebaseDb.child("student").push().setValue(s1);
+        mFirebaseDb.child("student").push().setValue(s2);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.pustikom.adapterplay.user;
 import android.content.ContentValues;
 
 import com.example.pustikom.adapterplay.db.StudentEntry;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * Created by pustikom on 07/10/16.
  */
 
+@IgnoreExtraProperties
 public class Student implements Serializable {
     private int id;
     private String noreg;
@@ -22,6 +24,10 @@ public class Student implements Serializable {
     private static final int GENDER_FEMALE_CODE=1;
     private static final String GENDER_MALE_TEXT="Laki-laki";
     private static final String GENDER_FEMALE_TEXT="Perempuan";
+
+    public Student(){
+
+    }
 
     public Student(String noreg, String name, int gender, String mail, String phone){
         this.noreg=noreg;
