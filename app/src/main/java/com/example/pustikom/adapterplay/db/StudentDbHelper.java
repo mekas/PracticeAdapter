@@ -21,9 +21,12 @@ public class StudentDbHelper extends SQLiteOpenHelper {
     private static final String LOG_TAG=StudentDbHelper.class.getSimpleName();
     private static final String DATABASE_NAME="college.db";
     private static final int DATABASE_VERSION=1;
+    private SQLiteDatabase rdb, wdb;
 
     public StudentDbHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
+        rdb=this.getReadableDatabase();
+        wdb=this.getWritableDatabase();
     }
 
     /**
@@ -56,16 +59,15 @@ public class StudentDbHelper extends SQLiteOpenHelper {
 
     /**
      * Insert this student instance to table Student, then update id on student
-     * @param wdb
      * @param student
      */
-    public void insert(SQLiteDatabase wdb, Student student){
+    public void insert(Student student){
         ContentValues values = Student.toContentValues(student);
         long rowId = wdb.insert(StudentEntry.TABLE_NAME, null, values);
         student.setId((int)rowId);
     }
 
-    public int update(SQLiteDatabase wdb, Student student){
+    public int update(Student student){
         ContentValues values = Student.toContentValues(student);
         String condition = StudentEntry._ID + "=?";
         String[] conditionArg = {student.getId() + ""};
@@ -74,7 +76,7 @@ public class StudentDbHelper extends SQLiteOpenHelper {
         return affectedRows;
     }
 
-    public StudentList fetchAllData(SQLiteDatabase rdb){
+    public StudentList fetchAllData(){
         //define columns to project
         String[] projection = {
                 StudentEntry._ID, StudentEntry.COLUMN_NIM, StudentEntry.COLUMN_NAME, StudentEntry.COLUMN_GENDER,
@@ -117,22 +119,21 @@ public class StudentDbHelper extends SQLiteOpenHelper {
 
     /**
      * Truncate rows from table student
-     * @param db
      */
-    public void truncate(SQLiteDatabase db){
+    public void truncate(){
         String sql = "DELETE FROM " + StudentEntry.TABLE_NAME + ";VACUUM;";
-        db.execSQL(sql);
+        wdb.execSQL(sql);
     }
 
     /**
      * Delete certain row based on condition
-     * @param db
+     * @param id, int
      * @return
      */
-    public int delete(SQLiteDatabase db, int id){
+    public int delete(int id){
         String condition = StudentEntry._ID + "=?";
         String[] conditionArg = {id + ""};
-        int affectedRows = db.delete(StudentEntry.TABLE_NAME,condition, conditionArg);
+        int affectedRows = wdb.delete(StudentEntry.TABLE_NAME,condition, conditionArg);
         return affectedRows;
     }
 }

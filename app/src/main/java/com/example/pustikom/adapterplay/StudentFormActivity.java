@@ -124,10 +124,10 @@ public class StudentFormActivity extends AppCompatActivity {
         if(mode==0){
             //add current student to global StudentList
             //Student.getStudentList().add(student);
-            db.insert(wdb,student);
+            db.insert(student);
         } else{
             //Student.getStudentList().set(student.getId(),student);
-            db.update(wdb,student);
+            db.update(student);
         }
     }
 
@@ -145,7 +145,7 @@ public class StudentFormActivity extends AppCompatActivity {
                 int id=student.getId();
                 //delete this student
                 SQLiteDatabase wdb = db.getWritableDatabase();
-                db.delete(wdb,id);
+                db.delete(id);
                 finish();
                 return true;
         }

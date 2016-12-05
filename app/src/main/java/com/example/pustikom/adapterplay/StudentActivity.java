@@ -51,7 +51,7 @@ public class StudentActivity extends AppCompatActivity {
 
         db = new StudentDbHelper(getApplicationContext());
         SQLiteDatabase rdb =db.getReadableDatabase();
-        studentList = db.fetchAllData(rdb);
+        studentList = db.fetchAllData();
 
         //set listener for each list item
         listItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -71,7 +71,7 @@ public class StudentActivity extends AppCompatActivity {
         super.onResume();
         //after saving reload data from database
         SQLiteDatabase rdb =db.getReadableDatabase();
-        studentList = db.fetchAllData(rdb);
+        studentList = db.fetchAllData();
         //call datasync to resynchronize the data
         new DataSyncTask().execute(studentList);
     }
@@ -81,11 +81,11 @@ public class StudentActivity extends AppCompatActivity {
         StudentList studentList = new StudentList();
         SQLiteDatabase wdb =db.getWritableDatabase();
         Student s1=new Student("3145136188","TRI FEBRIANA SIAMI",1,"tri@mhs.unj.ac.id","0858xxxxxx");
-        db.insert(wdb,s1);
+        db.insert(s1);
         studentList.add(s1);
 
         Student s2=new Student("3145136192","Ummu Kultsum",1,"ummu@mhs.unj.ac.id","0813xxxxxx");
-        db.insert(wdb,s2);
+        db.insert(s2);
         studentList.add(s2);
 
         return studentList;
@@ -107,7 +107,7 @@ public class StudentActivity extends AppCompatActivity {
                 return true;
             case R.id.clearListItem:
                 SQLiteDatabase wdb = db.getWritableDatabase();
-                db.truncate(wdb);
+                db.truncate();
                 new DataSyncTask().execute(new StudentList());
                 return true;
         }
