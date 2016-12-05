@@ -1,6 +1,7 @@
 package com.example.pustikom.adapterplay;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.pustikom.adapterplay.adapter.StudentArrayAdapter;
+import com.example.pustikom.adapterplay.adapter.StudentCursorAdapter;
 import com.example.pustikom.adapterplay.db.StudentDbHelper;
 import com.example.pustikom.adapterplay.user.Student;
 import com.example.pustikom.adapterplay.user.StudentList;
@@ -24,19 +26,16 @@ import com.example.pustikom.adapterplay.user.StudentList;
 
 public class StudentActivity extends AppCompatActivity {
     private FloatingActionButton addButton;
-    private StudentArrayAdapter studentArrayAdapter;
+    //private StudentArrayAdapter studentArrayAdapter;
+    private StudentCursorAdapter cursorAdapter;
     private ListView listItem;
     private StudentDbHelper db;
-    private StudentList studentList;
+    //private StudentList studentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_view);
-
-        studentArrayAdapter = new StudentArrayAdapter(this,new StudentList());
-        listItem = (ListView) findViewById(R.id.list_item);
-        listItem.setAdapter(studentArrayAdapter);
 
         //register button
         addButton  = (FloatingActionButton) findViewById(R.id.floatingAddButton);
@@ -50,7 +49,10 @@ public class StudentActivity extends AppCompatActivity {
         });
 
         db = new StudentDbHelper(getApplicationContext());
-        studentList = db.fetchAllData();
+        final Cursor cursor = db.getCursor();
+        cursorAdapter = new StudentCursorAdapter(this,cursor);
+        listItem = (ListView) findViewById(R.id.list_item);
+        listItem.setAdapter(cursorAdapter);
 
         //set listener for each list item
         listItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -58,7 +60,7 @@ public class StudentActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(StudentActivity.this, StudentFormActivity.class);
                 intent.putExtra("mode",1);
-                Student student = studentList.get(position);
+                Student student = db.constructStudent(cursor,position);
                 intent.putExtra("Student",student);
                 startActivity(intent);
             }
@@ -69,24 +71,17 @@ public class StudentActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         //after saving reload data from database
-        studentList = db.fetchAllData();
         //call datasync to resynchronize the data
-        new DataSyncTask().execute(studentList);
+        new DataSyncTask().execute(db.getCursor());
     }
 
     //store to database
-    private StudentList populateStudentDummies(){
-        StudentList studentList = new StudentList();
-        SQLiteDatabase wdb =db.getWritableDatabase();
+    private void populateStudentDummies(){
         Student s1=new Student("3145136188","TRI FEBRIANA SIAMI",1,"tri@mhs.unj.ac.id","0858xxxxxx");
         db.insert(s1);
-        studentList.add(s1);
 
         Student s2=new Student("3145136192","Ummu Kultsum",1,"ummu@mhs.unj.ac.id","0813xxxxxx");
         db.insert(s2);
-        studentList.add(s2);
-
-        return studentList;
     }
 
     @Override
@@ -100,25 +95,25 @@ public class StudentActivity extends AppCompatActivity {
         StudentList students;
         switch(item.getItemId()){
             case R.id.createDummyItem:
-                students = populateStudentDummies();
-                new DataSyncTask().execute(students);
+                populateStudentDummies();
+                new DataSyncTask().execute(db.getCursor());
                 return true;
             case R.id.clearListItem:
                 db.truncate();
-                new DataSyncTask().execute(new StudentList());
+                new DataSyncTask().execute(db.getCursor());
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private class DataSyncTask extends AsyncTask<StudentList, Void, StudentArrayAdapter>{
+    private class DataSyncTask extends AsyncTask<Cursor, Void, StudentCursorAdapter>{
         @Override
-        protected StudentArrayAdapter doInBackground(StudentList... params) {
-            StudentArrayAdapter adapter = new StudentArrayAdapter(StudentActivity.this,params[0]);
+        protected StudentCursorAdapter doInBackground(Cursor... params) {
+            StudentCursorAdapter adapter = new StudentCursorAdapter(StudentActivity.this,params[0]);
             return adapter;
         }
 
-        protected void onPostExecute(StudentArrayAdapter adapter){
+        protected void onPostExecute(StudentCursorAdapter adapter){
             listItem = (ListView) findViewById(R.id.list_item);
             listItem.setAdapter(adapter);
         }

@@ -76,6 +76,43 @@ public class StudentDbHelper extends SQLiteOpenHelper {
         return affectedRows;
     }
 
+    public Cursor getCursor(){
+        //define columns to project
+        String[] projection = {
+                StudentEntry._ID, StudentEntry.COLUMN_NIM, StudentEntry.COLUMN_NAME, StudentEntry.COLUMN_GENDER,
+                StudentEntry.COLUMN_MAIL, StudentEntry.COLUMN_PHONE
+        };
+        Cursor cursor = rdb.query(
+                StudentEntry.TABLE_NAME, //table to query
+                projection, //columns to project
+                null, //column for the where clause
+                null, //value for the where clause
+                null, //group statement
+                null, //don't filter by row groups
+                null); //order by statemnt
+        return cursor;
+    }
+
+    public Student constructStudent(Cursor cursor, int position){
+        int idIndex = cursor.getColumnIndex(StudentEntry._ID);
+        int nimIndex = cursor.getColumnIndex(StudentEntry.COLUMN_NIM);
+        int nameIndex = cursor.getColumnIndex(StudentEntry.COLUMN_NAME);
+        int genderIndex = cursor.getColumnIndex(StudentEntry.COLUMN_GENDER);
+        int phoneIndex = cursor.getColumnIndex(StudentEntry.COLUMN_PHONE);
+        int mailIndex = cursor.getColumnIndex(StudentEntry.COLUMN_MAIL);
+
+        cursor.moveToPosition(position);
+        long id = cursor.getLong(idIndex);
+        String nim = cursor.getString(nimIndex);
+        String name = cursor.getString(nameIndex);
+        int gender = cursor.getInt(genderIndex);
+        String mail = cursor.getString(mailIndex);
+        String phone = cursor.getString(phoneIndex);
+        //create student instance based on these data
+        Student student = new Student((int)id, nim,name,gender,mail,phone);
+        return student;
+    }
+
     public StudentList fetchAllData(){
         //define columns to project
         String[] projection = {
