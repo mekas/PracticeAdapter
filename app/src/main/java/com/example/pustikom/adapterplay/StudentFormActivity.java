@@ -27,7 +27,7 @@ public class StudentFormActivity extends AppCompatActivity {
     private static final String ADD_MODE="Add Student";
     private static final String EDIT_MODE="Edit Student";
     private EditText nimText, nameText, mailText, phoneText;
-    StudentDbHelper db;
+    private StudentDbHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +120,6 @@ public class StudentFormActivity extends AppCompatActivity {
      * @param student
      */
     private void saveStudent(Student student,int mode){
-        SQLiteDatabase wdb= db.getWritableDatabase();
         if(mode==0){
             //add current student to global StudentList
             //Student.getStudentList().add(student);
@@ -144,7 +143,6 @@ public class StudentFormActivity extends AppCompatActivity {
             case R.id.deleteStudentItem:
                 int id=student.getId();
                 //delete this student
-                SQLiteDatabase wdb = db.getWritableDatabase();
                 db.delete(id);
                 finish();
                 return true;

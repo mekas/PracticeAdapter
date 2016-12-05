@@ -19,7 +19,7 @@ import java.util.List;
 public class StudentDbHelper extends SQLiteOpenHelper {
 
     private static final String LOG_TAG=StudentDbHelper.class.getSimpleName();
-    private static final String DATABASE_NAME="college.db";
+    private static final String DATABASE_NAME="college2.db";
     private static final int DATABASE_VERSION=1;
     private SQLiteDatabase rdb, wdb;
 
