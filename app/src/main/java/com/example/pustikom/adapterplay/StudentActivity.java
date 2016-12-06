@@ -16,9 +16,7 @@ import android.widget.ListView;
 
 import com.example.pustikom.adapterplay.adapter.StudenFirebaseAdapter;
 import com.example.pustikom.adapterplay.adapter.StudentCursorAdapter;
-import com.example.pustikom.adapterplay.db.StudentDbHelper;
 import com.example.pustikom.adapterplay.user.Student;
-import com.example.pustikom.adapterplay.user.StudentList;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +31,6 @@ public class StudentActivity extends AppCompatActivity {
     private FloatingActionButton addButton;
     private StudenFirebaseAdapter firebaseAdapter;
     private ListView listItem;
-    //private StudentDbHelper db;
     private DatabaseReference mFirebaseDb;
 
     @Override

@@ -26,7 +26,7 @@ public class StudenFirebaseAdapter extends FirebaseListAdapter<Student> {
         TextView genderView = (TextView) v.findViewById(R.id.student_gender);
         TextView mailView = (TextView) v.findViewById(R.id.student_email);
         TextView phoneView = (TextView) v.findViewById(R.id.student_phone);
-        idView.setText(student.getId() + "");
+        idView.setText(position+1 + "");
         noregView.setText(student.getNoreg());
         nameView.setText(student.getName());
         switch (student.getGender()){
