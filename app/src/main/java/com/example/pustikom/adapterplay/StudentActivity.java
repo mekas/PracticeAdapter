@@ -31,7 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class StudentActivity extends AppCompatActivity {
     private FloatingActionButton addButton;
-    //private StudentCursorAdapter cursorAdapter;
     private StudenFirebaseAdapter firebaseAdapter;
     private ListView listItem;
     private StudentDbHelper db;
@@ -58,7 +57,7 @@ public class StudentActivity extends AppCompatActivity {
         //cursorAdapter = new StudentCursorAdapter(this,cursor);
         //setup firebase
         mFirebaseDb = FirebaseDatabase.getInstance().getReference();
-        firebaseAdapter=new StudenFirebaseAdapter(StudentActivity.this,Student.class,R.layout.student_instance,mFirebaseDb);
+        firebaseAdapter=new StudenFirebaseAdapter(StudentActivity.this,Student.class,R.layout.student_instance,mFirebaseDb.child("student"));
         listItem = (ListView) findViewById(R.id.list_item);
         listItem.setAdapter(firebaseAdapter);
 

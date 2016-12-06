@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "662245513139",
+    "firebase_url": "https://studentfirebase-45fc8.firebaseio.com",
+    "project_id": "studentfirebase-45fc8",
+    "storage_bucket": "studentfirebase-45fc8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662245513139:android:30e768dfe8aa0fd8",
+        "android_client_info": {
+          "package_name": "com.example.pustikom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "662245513139-25j7gd3o3sulme6c51crnrabcigmeic9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCN1SHA2_J-aUeRiKpYNx8VGBRiVZR_Xck"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662245513139:android:82a918576d55acc3",
+        "android_client_info": {
+          "package_name": "com.example.pustikom.adapterplay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "662245513139-25j7gd3o3sulme6c51crnrabcigmeic9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCN1SHA2_J-aUeRiKpYNx8VGBRiVZR_Xck"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
