@@ -33,7 +33,7 @@ public class StudentActivity extends AppCompatActivity {
     private FloatingActionButton addButton;
     private StudenFirebaseAdapter firebaseAdapter;
     private ListView listItem;
-    private StudentDbHelper db;
+    //private StudentDbHelper db;
     private DatabaseReference mFirebaseDb;
 
     @Override
@@ -52,15 +52,13 @@ public class StudentActivity extends AppCompatActivity {
             }
         });
 
-        db = new StudentDbHelper(getApplicationContext());
-        final Cursor cursor = db.getCursor();
-        //cursorAdapter = new StudentCursorAdapter(this,cursor);
         //setup firebase
         mFirebaseDb = FirebaseDatabase.getInstance().getReference();
         firebaseAdapter=new StudenFirebaseAdapter(StudentActivity.this,Student.class,R.layout.student_instance,mFirebaseDb.child("student"));
         listItem = (ListView) findViewById(R.id.list_item);
         listItem.setAdapter(firebaseAdapter);
 
+        //do something when data has changed
         mFirebaseDb.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -82,7 +80,8 @@ public class StudentActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(StudentActivity.this, StudentFormActivity.class);
                 intent.putExtra("mode",1);
-                Student student = db.constructStudent(cursor,position);
+
+                Student student = firebaseAdapter.getItem(position);
                 intent.putExtra("Student",student);
                 startActivity(intent);
             }
@@ -97,14 +96,18 @@ public class StudentActivity extends AppCompatActivity {
         //new DataSyncTask().execute(db.getCursor());
     }*/
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        firebaseAdapter.cleanup();
+    }
+
     /**
      * Write to SQLite and Firebase
      */
     private void populateStudentDummies(){
         Student s1=new Student("3145136188","TRI FEBRIANA SIAMI",1,"tri@mhs.unj.ac.id","0858xxxxxx");
-        db.insert(s1);
         Student s2=new Student("3145136192","Ummu Kultsum",1,"ummu@mhs.unj.ac.id","0813xxxxxx");
-        db.insert(s2);
 
         //test case
         mFirebaseDb.child("student").push().setValue(s1);
@@ -119,20 +122,20 @@ public class StudentActivity extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
-        StudentList students;
         switch(item.getItemId()){
             case R.id.createDummyItem:
                 populateStudentDummies();
-                new DataSyncTask().execute(db.getCursor());
                 return true;
             case R.id.clearListItem:
-                db.truncate();
-                new DataSyncTask().execute(db.getCursor());
+                mFirebaseDb.child("student").removeValue();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Unused due to Firebase is adaptive to Data Change
+     */
     private class DataSyncTask extends AsyncTask<Cursor, Void, StudentCursorAdapter>{
         @Override
         protected StudentCursorAdapter doInBackground(Cursor... params) {
