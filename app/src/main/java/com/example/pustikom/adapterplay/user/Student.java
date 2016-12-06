@@ -3,9 +3,12 @@ package com.example.pustikom.adapterplay.user;
 import android.content.ContentValues;
 
 import com.example.pustikom.adapterplay.db.StudentEntry;
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by pustikom on 07/10/16.
@@ -13,7 +16,7 @@ import java.io.Serializable;
 
 @IgnoreExtraProperties
 public class Student implements Serializable {
-    private int id;
+    private String id;
     private String noreg;
     private String name;
     private String phone;
@@ -37,7 +40,7 @@ public class Student implements Serializable {
         this.phone=phone;
     }
 
-    public Student(int id, String noreg, String name, int gender, String mail, String phone){
+    public Student(String id, String noreg, String name, int gender, String mail, String phone){
         this.id=id;
         this.noreg=noreg;
         this.name=name;
@@ -78,11 +81,11 @@ public class Student implements Serializable {
         this.mail = mail;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -94,6 +97,11 @@ public class Student implements Serializable {
         this.gender = gender;
     }
 
+    /**
+     * Obselete due to unused SQLite
+     * @param student
+     * @return
+     */
     public static ContentValues toContentValues(Student student){
         ContentValues values = new ContentValues();
         values.put(StudentEntry.COLUMN_NIM, student.getNoreg());
@@ -103,4 +111,19 @@ public class Student implements Serializable {
         values.put(StudentEntry.COLUMN_PHONE, student.getPhone());
         return values;
     }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", this.id);
+        result.put("name", this.name);
+        result.put("noreg", this.noreg);
+        result.put("gender", this.gender);
+        result.put("phone", this.phone);
+        result.put("mail", this.mail);
+
+        return result;
+    }
+
+
 }

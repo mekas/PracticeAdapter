@@ -17,6 +17,7 @@ import android.widget.ListView;
 import com.example.pustikom.adapterplay.adapter.StudenFirebaseAdapter;
 import com.example.pustikom.adapterplay.adapter.StudentCursorAdapter;
 import com.example.pustikom.adapterplay.user.Student;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class StudentActivity extends AppCompatActivity {
+    private final String TAG = this.getClass().toString();
     private FloatingActionButton addButton;
     private StudenFirebaseAdapter firebaseAdapter;
     private ListView listItem;
@@ -56,19 +58,49 @@ public class StudentActivity extends AppCompatActivity {
         listItem.setAdapter(firebaseAdapter);
 
         //do something when data has changed
-        mFirebaseDb.addValueEventListener(new ValueEventListener() {
+        mFirebaseDb.child("student").addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String key = child.getKey();
-                    Log.w("Debug", key);
-                }
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                String key = dataSnapshot.getKey();
+                Log.d(TAG, "onChildAdded:" + key);
+
+                // A new comment has been added, add it to the displayed list
+
+
+                // ...
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
+
+                String commentKey = dataSnapshot.getKey();
+
+                // ...
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
+
+                String commentKey = dataSnapshot.getKey();
+
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
+
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
 
             }
+
         });
 
         //set listener for each list item

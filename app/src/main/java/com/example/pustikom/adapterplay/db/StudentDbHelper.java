@@ -64,7 +64,7 @@ public class StudentDbHelper extends SQLiteOpenHelper {
     public void insert(Student student){
         ContentValues values = Student.toContentValues(student);
         long rowId = wdb.insert(StudentEntry.TABLE_NAME, null, values);
-        student.setId((int)rowId);
+        //student.setId((int)rowId);
     }
 
     public int update(Student student){
@@ -102,14 +102,14 @@ public class StudentDbHelper extends SQLiteOpenHelper {
         int mailIndex = cursor.getColumnIndex(StudentEntry.COLUMN_MAIL);
 
         cursor.moveToPosition(position);
-        long id = cursor.getLong(idIndex);
+        String id = cursor.getString(idIndex);
         String nim = cursor.getString(nimIndex);
         String name = cursor.getString(nameIndex);
         int gender = cursor.getInt(genderIndex);
         String mail = cursor.getString(mailIndex);
         String phone = cursor.getString(phoneIndex);
         //create student instance based on these data
-        Student student = new Student((int)id, nim,name,gender,mail,phone);
+        Student student = new Student(id, nim,name,gender,mail,phone);
         return student;
     }
 
@@ -138,14 +138,14 @@ public class StudentDbHelper extends SQLiteOpenHelper {
 
         StudentList studentList = new StudentList();
         while(cursor.moveToNext()){
-            long id = cursor.getLong(idIndex);
+            String id = cursor.getString(idIndex);
             String nim = cursor.getString(nimIndex);
             String name = cursor.getString(nameIndex);
             int gender = cursor.getInt(genderIndex);
             String mail = cursor.getString(mailIndex);
             String phone = cursor.getString(phoneIndex);
             //create student instance based on these data
-            Student student = new Student((int)id, nim,name,gender,mail,phone);
+            Student student = new Student(id, nim,name,gender,mail,phone);
 
             studentList.add(student);
         }

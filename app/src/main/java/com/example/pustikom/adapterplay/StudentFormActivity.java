@@ -15,6 +15,8 @@ import android.widget.EditText;
 
 import com.example.pustikom.adapterplay.db.StudentDbHelper;
 import com.example.pustikom.adapterplay.user.Student;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by eka on 04/11/16.
@@ -27,7 +29,8 @@ public class StudentFormActivity extends AppCompatActivity {
     private static final String ADD_MODE="Add Student";
     private static final String EDIT_MODE="Edit Student";
     private EditText nimText, nameText, mailText, phoneText;
-    private StudentDbHelper db;
+    //private StudentDbHelper db;
+    private DatabaseReference mFirebaseDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,9 @@ public class StudentFormActivity extends AppCompatActivity {
         nameText = (EditText) findViewById(R.id.edit_nama);
         mailText = (EditText) findViewById(R.id.edit_email);
         phoneText = (EditText) findViewById(R.id.edit_phone);
+
+        //setup database context
+        mFirebaseDb = FirebaseDatabase.getInstance().getReference();
 
         //setup listener
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +92,7 @@ public class StudentFormActivity extends AppCompatActivity {
                 }
             }
         });
-        db = new StudentDbHelper(getApplicationContext());
+        //db = new StudentDbHelper(getApplicationContext());
     }
 
     /**
@@ -121,12 +127,11 @@ public class StudentFormActivity extends AppCompatActivity {
      */
     private void saveStudent(Student student,int mode){
         if(mode==0){
-            //add current student to global StudentList
-            //Student.getStudentList().add(student);
-            db.insert(student);
+            //db.insert(student);
+            mFirebaseDb.child("student").push().setValue(student);
         } else{
-            //Student.getStudentList().set(student.getId(),student);
-            db.update(student);
+            //TODO: update student
+            //db.update(student);
         }
     }
 
@@ -141,9 +146,9 @@ public class StudentFormActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.deleteStudentItem:
-                int id=student.getId();
-                //delete this student
-                db.delete(id);
+                //int id=student.getId();
+                //TODO: delete this student
+                //db.delete(id);
                 finish();
                 return true;
         }

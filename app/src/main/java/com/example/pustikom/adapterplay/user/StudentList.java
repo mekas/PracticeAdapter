@@ -129,7 +129,7 @@ public class StudentList implements List<Student> {
      */
     @Override
     public Student set(int index, Student element) {
-        element.setId(index);
+        //element.setId(index);
         return studentList.set(index, element);
     }
 
@@ -142,7 +142,7 @@ public class StudentList implements List<Student> {
      */
     @Override
     public void add(int index, Student element) {
-        element.setId(index);
+        //element.setId(index);
         studentList.add(index, element);
         recomputeId(index+1,size());
     }
@@ -150,7 +150,7 @@ public class StudentList implements List<Student> {
     private void recomputeId(int startIndex, int finalIndex){
         for (int i = startIndex; i < finalIndex; i++) {
             Student student = get(i);
-            student.setId(i);
+            //student.setId(i);
         }
     }
 
