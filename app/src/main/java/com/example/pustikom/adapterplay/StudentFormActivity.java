@@ -131,7 +131,8 @@ public class StudentFormActivity extends AppCompatActivity {
             mFirebaseDb.child("student").push().setValue(student);
         } else{
             //TODO: update student
-            //db.update(student);
+            String key = student.getId();
+            mFirebaseDb.child("student").child(key).setValue(student);
         }
     }
 
@@ -146,9 +147,8 @@ public class StudentFormActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.deleteStudentItem:
-                //int id=student.getId();
-                //TODO: delete this student
-                //db.delete(id);
+                String key=student.getId();
+                mFirebaseDb.child("student").child(key).removeValue();
                 finish();
                 return true;
         }

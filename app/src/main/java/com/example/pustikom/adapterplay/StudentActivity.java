@@ -24,6 +24,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by pustikom on 07/10/16.
  */
@@ -64,41 +67,34 @@ public class StudentActivity extends AppCompatActivity {
                 String key = dataSnapshot.getKey();
                 Log.d(TAG, "onChildAdded:" + key);
 
-                // A new comment has been added, add it to the displayed list
-
-
-                // ...
+                //add key to instance
+                Map<String, Object> studentMap = dataSnapshot.getValue(Student.class).toMap();
+                studentMap.put("id",key);
+                Map<String, Object> updateData = new HashMap<String, Object>();
+                updateData.put("/student/" + key,studentMap);
+                mFirebaseDb.updateChildren(updateData);
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
                 Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
-
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
+                String key = dataSnapshot.getKey();
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
-
-                String commentKey = dataSnapshot.getKey();
-
-
+                String key = dataSnapshot.getKey();
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
                 Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
-
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.w(TAG, "postComments:onCancelled", databaseError.toException());
-
             }
 
         });
