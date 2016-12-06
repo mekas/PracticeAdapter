@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,12 +14,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.pustikom.adapterplay.adapter.StudenFirebaseAdapter;
 import com.example.pustikom.adapterplay.adapter.StudentCursorAdapter;
 import com.example.pustikom.adapterplay.db.StudentDbHelper;
 import com.example.pustikom.adapterplay.user.Student;
 import com.example.pustikom.adapterplay.user.StudentList;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by pustikom on 07/10/16.
@@ -26,7 +31,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class StudentActivity extends AppCompatActivity {
     private FloatingActionButton addButton;
-    private StudentCursorAdapter cursorAdapter;
+    //private StudentCursorAdapter cursorAdapter;
+    private StudenFirebaseAdapter firebaseAdapter;
     private ListView listItem;
     private StudentDbHelper db;
     private DatabaseReference mFirebaseDb;
@@ -35,9 +41,6 @@ public class StudentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_view);
-
-        //setup firebase
-        mFirebaseDb = FirebaseDatabase.getInstance().getReference();
 
         //register button
         addButton  = (FloatingActionButton) findViewById(R.id.floatingAddButton);
@@ -52,9 +55,27 @@ public class StudentActivity extends AppCompatActivity {
 
         db = new StudentDbHelper(getApplicationContext());
         final Cursor cursor = db.getCursor();
-        cursorAdapter = new StudentCursorAdapter(this,cursor);
+        //cursorAdapter = new StudentCursorAdapter(this,cursor);
+        //setup firebase
+        mFirebaseDb = FirebaseDatabase.getInstance().getReference();
+        firebaseAdapter=new StudenFirebaseAdapter(StudentActivity.this,Student.class,R.layout.student_instance,mFirebaseDb);
         listItem = (ListView) findViewById(R.id.list_item);
-        listItem.setAdapter(cursorAdapter);
+        listItem.setAdapter(firebaseAdapter);
+
+        mFirebaseDb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    String key = child.getKey();
+                    Log.w("Debug", key);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         //set listener for each list item
         listItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,13 +90,13 @@ public class StudentActivity extends AppCompatActivity {
         });
     }
 
-    @Override
+    /*@Override
     public void onResume(){
         super.onResume();
         //after saving reload data from database
         //call datasync to resynchronize the data
-        new DataSyncTask().execute(db.getCursor());
-    }
+        //new DataSyncTask().execute(db.getCursor());
+    }*/
 
     /**
      * Write to SQLite and Firebase
