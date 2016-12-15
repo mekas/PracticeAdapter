@@ -130,7 +130,6 @@ public class StudentFormActivity extends AppCompatActivity {
             //db.insert(student);
             mFirebaseDb.child("student").push().setValue(student);
         } else{
-            //TODO: update student
             String key = student.getId();
             mFirebaseDb.child("student").child(key).setValue(student);
         }

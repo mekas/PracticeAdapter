@@ -121,9 +121,6 @@ public class Student implements Serializable {
         result.put("gender", this.gender);
         result.put("phone", this.phone);
         result.put("mail", this.mail);
-
         return result;
     }
-
-
 }
