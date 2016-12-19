@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +18,8 @@ import android.widget.ListView;
 
 import com.example.pustikom.adapterplay.adapter.StudenFirebaseAdapter;
 import com.example.pustikom.adapterplay.adapter.StudentCursorAdapter;
+import com.example.pustikom.adapterplay.adapter.StudentFirebaseRecyclerAdapter;
+import com.example.pustikom.adapterplay.adapter.StudentHolder;
 import com.example.pustikom.adapterplay.user.Student;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -34,8 +38,8 @@ import java.util.Map;
 public class StudentActivity extends AppCompatActivity {
     private final String TAG = this.getClass().toString();
     private FloatingActionButton addButton;
-    private StudenFirebaseAdapter firebaseAdapter;
-    private ListView listItem;
+    private StudentFirebaseRecyclerAdapter firebaseAdapter;
+    private RecyclerView listItem;
     private DatabaseReference mFirebaseDb;
 
     @Override
@@ -56,8 +60,11 @@ public class StudentActivity extends AppCompatActivity {
 
         //setup firebase
         mFirebaseDb = FirebaseDatabase.getInstance().getReference();
-        firebaseAdapter=new StudenFirebaseAdapter(StudentActivity.this,Student.class,R.layout.student_instance,mFirebaseDb.child("student"));
-        listItem = (ListView) findViewById(R.id.list_item);
+        firebaseAdapter=new StudentFirebaseRecyclerAdapter(Student.class,R.layout.student_instance, StudentHolder.class, mFirebaseDb.child("student"));
+        listItem = (RecyclerView) findViewById(R.id.list_item);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        listItem.setLayoutManager(llm);
         listItem.setAdapter(firebaseAdapter);
 
         //do something when data has changed
@@ -100,6 +107,20 @@ public class StudentActivity extends AppCompatActivity {
         });
 
         //set listener for each list item
+        /*
+        listItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = listItem.indexOfChild(view);
+                Intent intent = new Intent(StudentActivity.this, StudentFormActivity.class);
+                intent.putExtra("mode",1);
+
+                Student student = firebaseAdapter.getItem(position);
+                intent.putExtra("Student",student);
+                startActivity(intent);
+            }
+        });*/
+        /*
         listItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -110,7 +131,7 @@ public class StudentActivity extends AppCompatActivity {
                 intent.putExtra("Student",student);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
     /*@Override
@@ -169,8 +190,8 @@ public class StudentActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(StudentCursorAdapter adapter){
-            listItem = (ListView) findViewById(R.id.list_item);
-            listItem.setAdapter(adapter);
+            listItem = (RecyclerView) findViewById(R.id.list_item);
+            listItem.setAdapter(firebaseAdapter);
         }
     }
 }
